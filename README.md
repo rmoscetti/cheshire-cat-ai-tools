@@ -1,21 +1,24 @@
-# Cheshire Cat API Client
+# Introduction to Chashire Cat AI tools for Industri 4.0 projects
+TODO
+
+## Tool 1: Cheshire Cat API Client
 
 A Python-based client for interacting with the Cheshire Cat API, an AI-powered conversational model. This script establishes a WebSocket connection to send messages and retrieve responses in real-time. Additionally, it supports optional history management and saving responses to a JSON file.
 
-## Features
+### Features
 
 - **Send Messages**: Communicate with the Cheshire Cat AI server via WebSocket.
 - **History Management**: Option to maintain or clear conversation history before sending messages.
 - **Save Responses**: Store server responses in a JSON file.
 - **Configurable**: Set user ID, authentication key, server URL, and other parameters via command-line arguments.
 
-## Requirements
+### Requirements
 
 - Python 3.10 or higher
 - `cheshire_cat_api` library
 - `requests` library (for HTTP operations)
 
-## Installation
+### Installation
 
 1. Clone this repository:
     ```bash
@@ -30,14 +33,14 @@ A Python-based client for interacting with the Cheshire Cat API, an AI-powered c
 
 3. Ensure the Cheshire Cat AI server is running and accessible at the specified `--base_url` and `--port`.
 
-## Usage
+### Usage
 
 Run the script with the following command:
 ```bash
 python cat_ws_client.py "your message" --user_id YOUR_USER_ID --auth_key YOUR_AUTH_KEY [OPTIONS]
 ```
 
-## Command-Line Arguments
+### Command-Line Arguments
 
 | Argument      | Description                                                     | Default    | Required |
 |---------------|-----------------------------------------------------------------|------------|----------|
