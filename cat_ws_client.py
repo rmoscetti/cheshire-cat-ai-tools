@@ -215,8 +215,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--history", 
         type=str, 
-        default="true",
-        help="Whether to maintain (true) or clear (false) the conversation history (default: true)"
+        default="false",
+        help="Whether to maintain (true) or clear (false) the conversation history (default: false)"
     )
     parser.add_argument(
         "--filename", 
