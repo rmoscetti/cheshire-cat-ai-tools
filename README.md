@@ -67,7 +67,7 @@ python cat_ws_client.py "What time is it?" --user_id USER123 --auth_key ABC123 -
 Contributions are welcome! Feel free to fork this repository, make your changes, and submit a pull request.
 
 ## License
-This project is licensed under the MIT License. See the [LICENSE](https://mit-license.org/) for details.
+This project is licensed under the MIT License. See the `LICENSE` for details.
 
 ## Author
 Roberto Moscetti rmoscetti@unitus.it
