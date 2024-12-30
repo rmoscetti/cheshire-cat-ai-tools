@@ -1,4 +1,4 @@
-# Introduction to Chashire Cat AI tools for Industri 4.0 projects
+# Introduction to Chashire Cat AI tools for Industry 4.0 projects
 TODO
 
 ## Tool 1: Cheshire Cat API Client
