@@ -44,9 +44,9 @@ python cat_ws_client.py "your message here" --user_id YOUR_USER_ID --auth_key YO
 | `message`     | The message to send to the server.                | N/A        | Yes      |
 | `--user_id`   | The user ID for authentication.                                | N/A        | Yes      |
 | `--auth_key`  | The authentication key (password) for the server.            | N/A        | Yes      |
-| `--base_url`  | The base URL (IP address) of the server.                       | `127.0.0.1`| Yes       |
-| `--port`      | The port number of the server.                           | `1865`     | Yes       |
-| `--history`   | Set to `false` to clear the conversation history before sending the message. | `false` | Yes       |
+| `--base_url`  | The base URL (IP address) of the server.                       | `127.0.0.1`| No       |
+| `--port`      | The port number of the server.                           | `1865`     | No       |
+| `--history`   | Set to `false` to clear the conversation history before sending the message. | `false` | No       |
 | `--filename`  | The filename to save the JSON response from the server.        | N/A        | No       |
 
 ## Examples
