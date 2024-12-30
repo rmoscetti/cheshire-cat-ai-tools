@@ -22,7 +22,7 @@ My personal (ambitious) initial idea is to integrate it into a smart food drying
     ```
 
 # Tool 1: Cheshire Cat Client
-`cat_ws_client.py` is a Python-based client for interacting with the Cheshire Cat AI server. This script establishes a WebSocket connection to send messages and retrieve responses in real time. Its primary purpose is to communicate with the Cheshire Cat AI servers while prioritising the use of procedural memory by removing history communications, which may currently be responsible for the AI agent's failure to use procedural memory. It also supports saving responses to a JSON file.
+`cat_ws_client.py` is a python-based client for interacting with the Cheshire Cat AI server. This script establishes a WebSocket connection to send messages and retrieve responses in real time. Its primary purpose is to communicate with the Cheshire Cat AI servers while prioritising the use of procedural memory by eliminating history communications, which may currently be responsible for the AI agent not suggesting the use of procedural memory to the LLM. It also supports saving AI responses to a JSON file.
 
 ## Features
 - **Send Messages**: Communicate with the Cheshire Cat AI server via WebSocket.
