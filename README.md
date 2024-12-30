@@ -1,4 +1,6 @@
-# Introduction to Chashire Cat AI tools for Industry 4.0 projects
+# Chashire Cat AI tools for Industry 4.0 projects
+
+## Introduction
 TODO
 
 Cheshire Cat AI [[website]](https://cheshire-cat-ai.github.io/docs/)
