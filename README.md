@@ -35,13 +35,16 @@ A Python-based client for interacting with the Cheshire Cat API, an AI-powered c
 Run the script with the following command:
 ```bash
 python cat_ws_client.py "your message" --user_id YOUR_USER_ID --auth_key YOUR_AUTH_KEY [OPTIONS]
+```
+
+## Command-Line Arguments
 
 | Argument      | Description                                                     | Default    | Required |
 |---------------|-----------------------------------------------------------------|------------|----------|
 | `message`     | The message to send to the Cheshire Cat server.                | N/A        | Yes      |
 | `--user_id`   | The user ID for authentication.                                | N/A        | Yes      |
 | `--auth_key`  | The authentication key for the Cheshire Cat server.            | N/A        | Yes      |
-| `--base_url`  | The base URL of the Cheshire Cat server.                       | 127.0.0.1  | No       |
-| `--port`      | The port of the Cheshire Cat server.                           | 1865       | No       |
-| `--history`   | Set to false to clear the conversation history before sending the message. | true       | No       |
+| `--base_url`  | The base URL of the Cheshire Cat server.                       | `127.0.0.1`| No       |
+| `--port`      | The port of the Cheshire Cat server.                           | `1865`     | No       |
+| `--history`   | Set to `false` to clear the conversation history before sending the message. | `true` | No       |
 | `--filename`  | The filename to save the JSON response from the server.        | N/A        | No       |
