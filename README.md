@@ -71,4 +71,4 @@ This project is licensed under the MIT License. See the [LICENSE](https://choose
 
 ## Author
 Roberto Moscetti rmoscetti@unitus.it
-(contact me if you want to be added)
+(contact me if you want to contribute to the project)
