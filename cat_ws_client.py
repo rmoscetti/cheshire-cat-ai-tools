@@ -21,7 +21,7 @@ Dependencies:
 
 Usage:
 Run the script with the required arguments. For example:
-    python script.py --base_url 127.0.0.1 --port 1865 --user_id USER123 --auth_key ABC123 --history False --filename "response.json" "your message here" 
+    python script.py "your message here" --base_url 127.0.0.1 --port 1865 --user_id USER123 --auth_key ABC123 --history False --filename "response.json"
 """
 
 import time # For handling delays and timeouts
