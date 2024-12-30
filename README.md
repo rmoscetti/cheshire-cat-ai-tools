@@ -6,7 +6,7 @@ Cheshire Cat AI [[website]](https://cheshire-cat-ai.github.io/docs/)
 ### Requirements
 
 - Python 3.10 or higher
-- `cheshire_cat_api` library [git-hub](https://github.com/cheshire-cat-ai/api-client-py/tree/main)
+- `cheshire_cat_api` library [[github]](https://github.com/cheshire-cat-ai/api-client-py/tree/main)
 - `requests` library (for HTTP operations)
 
 ### Installation
