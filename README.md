@@ -6,7 +6,7 @@ The Cheshire Cat AI Tools for Industry 4.0/5.0 aim to be a toolkit dedicated to 
 The initial (ambitious) idea is to integrate it into a smart food drying system to monitor and (hopefully) control the process by interacting with an LLM.
 
 ## Requirements
-- Python 3.10 or higher
+- `Python 3.10 or higher`
 - `cheshire_cat_api` library [[github]](https://github.com/cheshire-cat-ai/api-client-py/tree/main)
 - `requests` library (for HTTP operations)
 
