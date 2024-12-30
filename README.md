@@ -35,7 +35,7 @@ The initial (ambitious) idea is to integrate it into a smart food drying system 
 
 2. Run the script with the following command:
 ```bash
-python cat_ws_client.py "your message here" --user_id YOUR_USER_ID --auth_key YOUR_AUTH_KEY [OPTIONS]
+python cat_chat.py "your message here" --user_id YOUR_USER_ID --auth_key YOUR_AUTH_KEY [OPTIONS]
 ```
 
 ## Command-Line Arguments
@@ -52,15 +52,15 @@ python cat_ws_client.py "your message here" --user_id YOUR_USER_ID --auth_key YO
 ## Examples
 To send a message and save the response:
 ```bash
-python cat_ws_client.py "What time is it?" --user_id USER123 --auth_key ABC123 --filename response.json
+python cat_chat.py "What time is it?" --user_id USER123 --auth_key ABC123 --filename response.json
 ```
 To send a message without clearing the chat history:
 ```bash
-python cat_ws_client.py "What time is it?" --user_id USER123 --auth_key ABC123 --history true
+python cat_chat.py "What time is it?" --user_id USER123 --auth_key ABC123 --history true
 ```
 To clear history before sending a message:
 ```bash
-python cat_ws_client.py "What time is it?" --user_id USER123 --auth_key ABC123 --history false
+python cat_chat.py "What time is it?" --user_id USER123 --auth_key ABC123 --history false
 ```
 
 # Contributing
