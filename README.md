@@ -4,7 +4,7 @@ A Python-based client for interacting with the Cheshire Cat API, an AI-powered c
 
 ## Features
 
-- **Send Messages**: Communicate with the Cheshire Cat model via WebSocket.
+- **Send Messages**: Communicate with the Cheshire Cat AI server via WebSocket.
 - **History Management**: Option to maintain or clear conversation history before sending messages.
 - **Save Responses**: Store server responses in a JSON file.
 - **Configurable**: Set user ID, authentication key, server URL, and other parameters via command-line arguments.
@@ -19,7 +19,7 @@ A Python-based client for interacting with the Cheshire Cat API, an AI-powered c
 
 1. Clone this repository:
     ```bash
-    git clone https://github.com/your-username/cheshire-cat-client.git
+    git clone https://github.com/rmoscetti/cheshire-cat-client.git
     cd cheshire-cat-client
     ```
 
@@ -28,10 +28,10 @@ A Python-based client for interacting with the Cheshire Cat API, an AI-powered c
     pip install -r requirements.txt
     ```
 
-3. Ensure the Cheshire Cat server is running and accessible at the specified `--base_url` and `--port`.
+3. Ensure the Cheshire Cat AI server is running and accessible at the specified `--base_url` and `--port`.
 
 ## Usage
 
 Run the script with the following command:
 ```bash
-python script.py "your message" --user_id YOUR_USER_ID --auth_key YOUR_AUTH_KEY [OPTIONS]
+python cat_ws_client.py "your message" --user_id YOUR_USER_ID --auth_key YOUR_AUTH_KEY [OPTIONS]
