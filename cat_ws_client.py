@@ -1,6 +1,6 @@
 """
 Author: Roberto Moscetti
-Version: 0.1
+Version: 1.0
 
 Description:
 This script serves as a Python client for interacting with the Cheshire Cat API (https://github.com/cheshire-cat-ai/api-client-py/tree/main),
