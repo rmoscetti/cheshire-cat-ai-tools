@@ -22,7 +22,7 @@ TODO
 
 ## Tool 1: Cheshire Cat API Client
 
-A Python-based client for interacting with the Cheshire Cat API, an AI-powered conversational model. This script establishes a WebSocket connection to send messages and retrieve responses in real-time. Additionally, it supports optional history management and saving responses to a JSON file.
+A Python-based client for interacting with the Cheshire Cat API, an AI-powered conversational framework. This script establishes a WebSocket connection to send messages and retrieve responses in real-time. Its primary intent is to communicate with Cheshire Cat AI servers while prioritizing the use of procedural memory. Additionally, it supports optional chat history management and saving responses to a JSON file.
 
 ### Features
 
