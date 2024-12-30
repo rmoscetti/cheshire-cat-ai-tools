@@ -11,7 +11,7 @@ A Python-based client for interacting with the Cheshire Cat API, an AI-powered c
 
 ## Requirements
 
-- Python 3.8 or higher
+- Python 3.10 or higher
 - `cheshire_cat_api` library
 - `requests` library (for HTTP operations)
 
