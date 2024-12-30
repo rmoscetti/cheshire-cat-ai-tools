@@ -15,7 +15,7 @@ Cheshire Cat AI, an AI-agnostic conversational framework [[website]](https://che
 
 1. Clone this repository:
     ```bash
-    git clone https://github.com/rmoscetti/cheshire-cat-client.git
+    git clone https://github.com/rmoscetti/chashire-cat-ai-tools.git
     cd cheshire-cat-ai-tools
     ```
 
