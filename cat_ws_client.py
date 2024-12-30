@@ -16,7 +16,8 @@ Features:
 
 Dependencies:
 - `cheshire_cat_api` library for interfacing with the Cheshire Cat server.
-- Standard Python libraries: `time`, `json`, `threading`, `logging`, `argparse`, `requests`.
+- `requests` library for sending HTTP/1.1 requests
+- Standard Python libraries: `time`, `json`, `threading`, `logging`, `argparse`.
 
 Usage:
 Run the script with the required arguments. For example:
