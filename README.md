@@ -11,12 +11,13 @@ The initial (ambitious) idea is to integrate it into a smart food drying system 
 - `requests` library (for HTTP operations)
 
 ## Installation
-1. Clone this repository:
+1. Install Cheshire Cat AI on your server and configure it
+2. Clone this repository:
     ```bash
     git clone https://github.com/rmoscetti/chashire-cat-ai-tools.git
     cd cheshire-cat-ai-tools
     ```
-2. Install the required dependencies:
+3. Install the required dependencies:
     ```bash
     pip install -r requirements.txt
     ```
