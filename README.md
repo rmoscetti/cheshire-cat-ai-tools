@@ -3,7 +3,7 @@
 ## Introduction
 TODO
 
-Cheshire Cat AI [[website]](https://cheshire-cat-ai.github.io/docs/)
+Cheshire Cat AI, an AI-agnostic conversational framework [[website]](https://cheshire-cat-ai.github.io/docs/)
 
 ### Requirements
 
@@ -26,7 +26,7 @@ Cheshire Cat AI [[website]](https://cheshire-cat-ai.github.io/docs/)
 
 ## Tool 1: Cheshire Cat API Client
 
-A Python-based client for interacting with the Cheshire Cat AI server, an AI-agnostic conversational framework. This script establishes a WebSocket connection to send messages and retrieve responses in real-time. Its primary intent is to communicate with Cheshire Cat AI servers while prioritizing the use of procedural memory. Additionally, it supports optional chat history management and saving responses to a JSON file.
+`cat_ws_client.py` is a python-based client for interacting with the Cheshire Cat AI server throught WebSocket. This script establishes a WebSocket connection to send messages and retrieve responses in real-time. Its primary intent is to communicate with Cheshire Cat AI servers while prioritizing the use of procedural memory. Additionally, it supports optional chat history management and saving responses to a JSON file.
 
 ### Features
 
