@@ -69,6 +69,6 @@ Contributions are welcome! Feel free to fork this repository, make your changes,
 ## License
 This project is licensed under the MIT License. See the [LICENSE](https://mit-license.org/) for details.
 
-##Author
-
+## Author
 Roberto Moscetti rmoscetti@unitus.it
+(contact me if you want to be added)
