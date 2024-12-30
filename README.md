@@ -20,8 +20,6 @@ TODO
     pip install -r requirements.txt
     ```
 
-3. Ensure the Cheshire Cat AI server is running and accessible at the specified `--base_url` and `--port`.
-
 ## Tool 1: Cheshire Cat API Client
 
 A Python-based client for interacting with the Cheshire Cat API, an AI-powered conversational model. This script establishes a WebSocket connection to send messages and retrieve responses in real-time. Additionally, it supports optional history management and saving responses to a JSON file.
@@ -35,9 +33,11 @@ A Python-based client for interacting with the Cheshire Cat API, an AI-powered c
 
 ### Usage
 
-Run the script with the following command:
+1. Ensure the Cheshire Cat AI server is running and accessible at the specified `--base_url` and `--port`.
+
+2. Run the script with the following command:
 ```bash
-python cat_ws_client.py "your message" --user_id YOUR_USER_ID --auth_key YOUR_AUTH_KEY [OPTIONS]
+python cat_ws_client.py "your message here" --user_id YOUR_USER_ID --auth_key YOUR_AUTH_KEY [OPTIONS]
 ```
 
 ### Command-Line Arguments
