@@ -140,13 +140,13 @@ def parse_history_argument(history_str):
     Raises:
         ValueError: If the argument is neither "true" nor "false".
     """
-  history_str = history_str.lower() # Convert to lowercase for case-insensitive comparison
-  if history_str == "true":
-    return True
-  elif history_str == "false":
-    return False
-  else:
-    raise ValueError("--history argument must be either 'true' or 'false'.")
+    history_str = history_str.lower() # Convert to lowercase for case-insensitive comparison
+    if history_str == "true":
+        return True
+    elif history_str == "false":
+        return False
+    else:
+        raise ValueError("--history argument must be either 'true' or 'false'.")
 
 def main(message, user_id, auth_key, base_url, port, history, file):
     """
