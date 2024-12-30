@@ -20,7 +20,7 @@ A Python-based client for interacting with the Cheshire Cat API, an AI-powered c
 1. Clone this repository:
     ```bash
     git clone https://github.com/rmoscetti/cheshire-cat-client.git
-    cd cheshire-cat-client
+    cd cheshire-cat-ai-tools
     ```
 
 2. Install the required dependencies:
@@ -41,10 +41,10 @@ python cat_ws_client.py "your message" --user_id YOUR_USER_ID --auth_key YOUR_AU
 
 | Argument      | Description                                                     | Default    | Required |
 |---------------|-----------------------------------------------------------------|------------|----------|
-| `message`     | The message to send to the Cheshire Cat server.                | N/A        | Yes      |
+| `message`     | The message to send to the server.                | N/A        | Yes      |
 | `--user_id`   | The user ID for authentication.                                | N/A        | Yes      |
-| `--auth_key`  | The authentication key for the Cheshire Cat server.            | N/A        | Yes      |
-| `--base_url`  | The base URL of the Cheshire Cat server.                       | `127.0.0.1`| No       |
-| `--port`      | The port of the Cheshire Cat server.                           | `1865`     | No       |
+| `--auth_key`  | The authentication key (password) for the server.            | N/A        | Yes      |
+| `--base_url`  | The base URL (IP address) of the server.                       | `127.0.0.1`| No       |
+| `--port`      | The port number of the server.                           | `1865`     | No       |
 | `--history`   | Set to `false` to clear the conversation history before sending the message. | `true` | No       |
 | `--filename`  | The filename to save the JSON response from the server.        | N/A        | No       |
