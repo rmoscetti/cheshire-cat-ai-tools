@@ -21,7 +21,7 @@ My personal (ambitious) initial idea is to integrate it into a smart food drying
     pip install -r requirements.txt
     ```
 
-# Tool 1: Cheshire Cat API Client
+# Tool 1: Cheshire Cat Client
 `cat_ws_client.py` is a python-based client for interacting with the Cheshire Cat AI server. This script establishes a WebSocket connection to send messages and retrieve responses in real-time. Its primary intent is to communicate with Cheshire Cat AI servers while prioritizing the use of procedural memory by removing the history chat. Additionally, it supports optional chat history management and saving responses to a JSON file.
 
 ## Features
