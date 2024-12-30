@@ -1,4 +1,4 @@
-# Chashire Cat AI toolkit for Industry 4.0/5.0 applications
+# Chashire Cat AI Toolkit for Industry 4.0/5.0 applications
 ![Chashire Cat 4.0](images/cheshire_cat_4.0.png)
 
 # Introduction
