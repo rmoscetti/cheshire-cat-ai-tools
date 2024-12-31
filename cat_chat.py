@@ -56,10 +56,11 @@ def my_custom_message_handler(message: str):
         if answer.get('type') != 'chat_token': # Ignore 'chat_token' messages
             #logging.info("JSON: %s", answer)
             json_str = json.dumps(answer, indent=4)
-            print(json_str)
             if filename: # Save JSON to file if filename is provided
                 with open(filename, 'w') as f:
                     f.write(json_str)
+            else: # Send JSON to the prompt if filename is not provided
+                print(json_str)
             close_event.set()
     except json.JSONDecodeError as e:
         logging.error("Failed to decode message: %s", e)
