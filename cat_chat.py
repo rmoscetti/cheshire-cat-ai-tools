@@ -185,7 +185,7 @@ def main(message, user_id, auth_key, base_url, port, history, file):
 
 if __name__ == "__main__":
     # Configure argparse to handle command-line arguments
-    parser = argparse.ArgumentParser(description="Cheshire Cat API Client Script")
+    parser = argparse.ArgumentParser(description="Cheshire Cat API Chat Script")
     parser.add_argument(
         "message", 
         type=str, 
