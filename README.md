@@ -7,7 +7,7 @@ The initial (ambitious) idea is to integrate it into a smart food drying system 
 
 ## Requirements
 - `Python 3.10 or higher`
-- `cheshire_cat_api` library [[github]](https://github.com/cheshire-cat-ai/api-client-py/tree/main)
+- [[`cheshire_cat_api` library]](https://github.com/cheshire-cat-ai/api-client-py/tree/main)
 - `requests` library (for HTTP operations)
 
 ## Installation
