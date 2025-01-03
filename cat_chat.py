@@ -101,7 +101,7 @@ def wait_for_connection(client, timeout=10):
     while not client.is_ws_connected:
         time.sleep(1)
         if time.time() - start_time > timeout:
-            raise TimeoutError("Failed to connect to WebSocket within timeout.")
+            raise TimeoutError("Failed to connect to WebSocket within timeout (10 sec).")
 
 def clear_history(base_url, port, user_id):
     """
