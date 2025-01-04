@@ -17,11 +17,9 @@ For a comprehensive guide on creating plugins, refer to the official [Cheshire C
 
 The included script defines a tool named `zero_order_equation`, which calculates the dependent variable `y` for a given set of independent variables `x` using the formula:
 
-$
-\begin{aligned}
-y &= a \times x + b
-\end{aligned}
-$
+$$
+y = a \times x + b
+$$
 
 Where:
 - `x`: A list of float values representing the independent variable.
