@@ -1,0 +1,10 @@
+{
+  "name": "Cheshire Cat AI toolkits",
+  "description": "A set of function to be used for industrial 4.0/5.0 applications",
+  "author_name": "Roberto Moscetti, Simone Massaro",
+  "author_url": "https://github.com/rmoscetti/chashire-cat-ai-tools",
+  "plugin_url": "https://github.com/rmoscetti/chashire-cat-ai-tools",
+  "tags": "TODO",
+  "thumb": "https://github.com/rmoscetti/chashire-cat-ai-tools/blob/main/images/cheshire_cat_4.0_thumb.png?raw=true",
+  "version": "0.1"
+}
