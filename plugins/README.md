@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains a preliminary plugin for the Cheshire Cat AI framework, designed to demonstrate the integration of custom tools. Please note that this plugin is intended solely for testing purposes and will not be included in the final release.
+This repository contains a preliminary plugin for the Cheshire Cat AI framework, designed to demonstrate the integration of custom toolkits. Please note that this plugin is intended solely for testing purposes and will not be included in the final release.
 
 ## What is a Plugin?
 
