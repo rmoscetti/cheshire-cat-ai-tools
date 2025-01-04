@@ -24,7 +24,7 @@ def zero_order_equation(tool_input, cat):
             - x: List of float values for the independent variable.
             - slope: Value of the slope (float).
             - intercept: Value of the intercept (float).
-            - y: List of float values for the dependent variable calculated using the zero-order kinetics equation (y = a*x + b).
+            - y: List of float values for the dependent variable calculated using the zero-order equation (y = a*x + b).
     """
 
     data = json.loads(tool_input) 
