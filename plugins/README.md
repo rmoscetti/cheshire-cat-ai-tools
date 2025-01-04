@@ -11,8 +11,6 @@ In the context of the Cheshire Cat AI framework, a **plugin** is a package that 
 - **Tools**: Python functions that can be invoked by the AI agent to perform specific tasks.
 - **Hooks**: Functions that allow developers to modify the behavior of the AI agent at various points in its execution.
 
-For a comprehensive guide on creating plugins, refer to the official [Cheshire Cat AI documentation](https://cheshire-cat-ai.github.io/docs/plugins/plugins/).
-
 ## Plugin Details
 
 The included script defines a tool named `zero_order_equation`, which calculates the dependent variable `y` for a given set of independent variables `x` using the formula:
@@ -33,3 +31,4 @@ The function accepts a JSON string as input, processes the data, and returns a J
 ## Usage
 
 To utilize this plugin within the Cheshire Cat AI framework, place the script in the `cat/plugins` directory.
+For a comprehensive guide on creating and using plugins, refer to the official [Cheshire Cat AI documentation](https://cheshire-cat-ai.github.io/docs/plugins/plugins/).
