@@ -1,0 +1,9 @@
+
+# pixi environments
+.pixi
+*.egg-info
+__pycache__
+.env.local
+.ipynb_checkpoints
+*.zip
+*.sqlite3
