@@ -1,6 +1,6 @@
 """
 Author: Roberto Moscetti
-Version: 0.0.1
+Version: 0.0.2
 Date: 2025/01/12
 
 This plugin provides hooks and tools for managing interactions with an LLM model, focusing on episodic memory handling,
