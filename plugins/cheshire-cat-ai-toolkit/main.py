@@ -80,9 +80,7 @@ def linear_equation(tool_input, cat):
     Returns:
         A JSON string containing the following keys:
             - x: List of float values for the independent variable.
-            - slope (a): Value of the slope (float).
-            - intercept (b): Value of the intercept (float).
-            - y: List of float values for the dependent variable calculated using the linear equation
+            - y: List of float values for the dependent variable calculated using the linear equation.
     """
 
     data = json.loads(tool_input) 
