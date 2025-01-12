@@ -1,6 +1,6 @@
 """
-Author: Roberto Moscetti
-Version: 0.0.2
+Author: Roberto Moscetti, Simone Massaro
+Version: 0.0.3
 Date: 2025/01/12
 
 This plugin provides hooks and tools for managing interactions with an LLM model, focusing on episodic memory handling,
@@ -18,11 +18,37 @@ Key Features:
    - Implements a tool for solving linear equations of the form 'y = a*x + b'.
    - Accepts input as a JSON structure and returns output in a structured JSON format.
    - Designed to integrate seamlessly with the LLM's output system by adding necessary prefixes.
+   
+4. Drying Time Prediction:
+   - Provides a tool for estimating the remaining time until the drying process is complete.
+   - Accepts an empty input and returns the remanining time.
 """
 
 import numpy as np
 import json
 from cat.mad_hatter.decorators import tool, hook
+
+
+###########
+## HOOKS ##
+###########
+
+# 1. Episodic Memory Hook
+@hook(priority=1)
+def before_cat_recalls_episodic_memories(episodic_recall_config, cat) -> dict:
+    """Hook to manage the number of the episodic memories."""
+    # Returns an maximum number of episodic memories
+    episodic_recall_config["k"] = 3 # default
+    return episodic_recall_config
+
+# 2. Prompt Prefix Customization
+@hook(priority=1)
+def agent_prompt_prefix(prefix, cat) -> str:
+    """Hook to change the prompt prefix of the LLM model to prioritize the usage of tools."""
+    # Prioritize the usage of tools through the moficiation of the prompt prefix
+    additional_string = "\nIf available, the 'Context of executed system tools' is your priority."
+    prefix += additional_string
+    return prefix
 
 def output_prefix(text) -> str:
     """
@@ -35,21 +61,11 @@ def output_prefix(text) -> str:
     ]
     return ''.join(prefixes) + text
 
-@hook(priority=1)
-def before_cat_recalls_episodic_memories(episodic_recall_config, cat) -> dict:
-    """Hook to manage the number of the episodic memories."""
-    # Returns an maximum number of episodic memories
-    episodic_recall_config["k"] = 3 # default
-    return episodic_recall_config
+###########
+## TOOLS ##
+###########
 
-@hook(priority=1)
-def agent_prompt_prefix(prefix, cat) -> str:
-    """Hook to change the prompt prefix of the LLM model to prioritize the usage of tools."""
-    # Prioritize the usage of tools through the moficiation of the prompt prefix
-    additional_string = "\nIf available, the 'Context of executed system tools' is your priority."
-    prefix += additional_string
-    return prefix
-
+# 3. Linear Equation Tool (experimental tool - just for test)
 @tool (return_direct=False,
        examples=[
            "linear equation", 
@@ -100,5 +116,22 @@ def linear_equation(tool_input, cat):
     result = output_prefix("Show the following equation: y = " + str(a) + "*x + " + str(b) + ", and organize the following raw data as a table: " + json.dumps(output))
     return result
 
+# 4. Drying time prediction (experimental tool - just for test)
+@tool
+def time_to_finish(tool_input, cat) -> str:
+    """
+    Returns the time to the finish of the drying process.
+    
+    Provide an emtpy input
+    The time left in minutes (integer).
+    """
 
+    # for testing all dryers will be done at midnight, so compute the minutes left until midnight
+    import datetime
 
+    now = datetime.datetime.now(datetime.timezone.utc)
+    next_midnight = (now + datetime.timedelta(days=1)).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
+    time_left = (next_midnight - now).total_seconds() // 60
+    return str(time_left) # important must be a string other the cat crashes
