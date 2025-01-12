@@ -1,0 +1,5 @@
+# Time zone
+TZ=Europe/Rome
+
+# Qdrant server
+QDRANT__SERVICE__API_KEY=""

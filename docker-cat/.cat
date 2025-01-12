@@ -1,0 +1,7 @@
+# Time zone
+TZ=Europe/Rome
+
+# Qdrant server
+CCAT_QDRANT_HOST=rmoscetti_qdrant # <url of the cluster>
+CCAT_QDRANT_PORT=6333 # <port of the cluster, usually 6333>
+CCAT_QDRANT_API_KEY="" # optional <api-key>

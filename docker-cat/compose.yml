@@ -1,12 +1,32 @@
 services:
 
-  cheshire-cat-core:
-    image: ghcr.io/cheshire-cat-ai/core:latest
-    container_name: cheshire_cat_core
+  rmoscetti_cheshire-cat-core:
+    image: rmoscetti_cheshire_cat:1.7.1
+    container_name: rmoscetti_cat
+    depends_on:
+      - rmoscetti_qdrant
+    privileged: true
+    env_file:
+      - .cat
     ports:
       - 1865:80
       - 5678:5678
     volumes:
-      - ./static:/app/cat/static
-      - ./plugins:/app/cat/plugins
-      - ./data:/app/cat/data
+      - /home/r.moscetti/cheshire-cat-ai/static:/app/cat/static
+      - /home/r.moscetti/cheshire-cat-ai/plugins:/app/cat/plugins
+      - /home/r.moscetti/cheshire-cat-ai/data:/app/cat/data
+    restart: unless-stopped
+
+  rmoscetti_qdrant:
+    image: qdrant/qdrant:latest
+    container_name: rmoscetti_qdrant
+    privileged: true
+    env_file:
+      - .qdrant
+    ports:
+      - 6333:6333
+    expose:
+      - 6333
+    volumes:
+      - /home/r.moscetti/cheshire-cat-ai/qdrant_memory:/qdrant/storage
+    restart: unless-stopped
