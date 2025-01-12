@@ -82,7 +82,7 @@ def linear_equation(tool_input, cat):
     Essential to compute the result (y) of a linear equation (y = a*x + b).
     Do not provide any partial results.
 
-    Input is always a JSON string structures follows:
+    Input is always a JSON string structured as follows:
         {
             "x": [x1, x2, x3, ...], 
             "a": <float>, 
