@@ -4,8 +4,9 @@ services:
     image: rmoscetti_cheshire_cat:1.7.1
     container_name: rmoscetti_cat
     depends_on:
-      - rmoscetti_qdrant
-    privileged: true
+      - qdrant
+      - ollama
+      - mariadb
     env_file:
       - .cat
     ports:
@@ -17,10 +18,9 @@ services:
       - /home/r.moscetti/cheshire-cat-ai/data:/app/cat/data
     restart: unless-stopped
 
-  rmoscetti_qdrant:
+  qdrant:
     image: qdrant/qdrant:latest
     container_name: rmoscetti_qdrant
-    privileged: true
     env_file:
       - .qdrant
     ports:
@@ -29,4 +29,30 @@ services:
       - 6333
     volumes:
       - /home/r.moscetti/cheshire-cat-ai/qdrant_memory:/qdrant/storage
+    restart: unless-stopped
+    
+  ollama:
+    image: ollama/ollama:latest
+    container_name: rmoscetti_ollama
+    ports:
+      - 11444:11434
+    expose:
+      - 11434
+    environment:
+      - gpus=all
+    volumes:
+      - /home/r.moscetti/ollama:/root/.ollama
+    restart: unless-stopped
+
+  mariadb:
+    image: mariadb:latest
+    container_name: rmoscetti_mariadb
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    env_file:
+      - .mariadb
+    volumes:
+      - /home/r.moscetti/cheshire-cat-ai/mysql:/var/lib/mysql
     restart: unless-stopped
