@@ -38,10 +38,15 @@ services:
       - 11444:11434
     expose:
       - 11434
-    environment:
-      - gpus=all
     volumes:
       - /home/r.moscetti/ollama:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     restart: unless-stopped
 
   mariadb:
