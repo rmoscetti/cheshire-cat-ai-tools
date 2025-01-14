@@ -1,6 +1,6 @@
 services:
 
-  rmoscetti_cheshire-cat-core:
+  cheshire-cat-core:
     image: rmoscetti_cheshire_cat:1.7.1
     container_name: rmoscetti_cat
     depends_on:
