@@ -1,43 +1,27 @@
-# deploys the plugin into the cheshire cat container
+"""
+Deploys the plugin into the Cheshire Cat Container using the rest API
+Compresses the plugin directory into a zip, uploads it and then if then enables the plugin if necessary 
+"""
+
 from pyprojroot import here
-from subprocess import run
 import shutil
-import sys
-
-# def deploy_plugins():
-#     # remove the old plugins
-#     shutil.rmtree(here('docker-cat/plugins'), ignore_errors=True) # sometimes can't delete the folder because of permissions
-#     # copy the new plugins
-#     shutil.copytree(here('plugins'), here('docker-cat/plugins'), dirs_exist_ok=True)
-    
-#     compose = here('docker-cat/compose.yml')
-#     out = run(f'docker compose -f {compose} up --build -d', shell=True, capture_output=True)
-#     if out.returncode != 0:
-#         print(out.stderr.decode())
-#         sys.exit(1)
-
-
-
-# if __name__ == '__main__':
-#     deploy_plugins()
-
+import time
 from dotenv import dotenv_values
-from pathlib import Path
 import cheshire_cat_api as ccat
+
 config = ccat.Config()
 cat_client = ccat.CatClient(config)
-import time
 
 env = dotenv_values('.env')
 env = env | dotenv_values('.env.local')
 
 
-def zip_plugin() -> bytes:
+def zip_plugin() -> str:
     """
     Zip the plugin directory.
 
     Returns:
-        The zip file as bytes.
+        The zip file path
     """
     plugins_dir = here('plugins/cheshire-cat-ai-toolkit')
     zip_path = here('plugins/cheshire-cat-ai-toolkit.zip')
@@ -46,10 +30,6 @@ def zip_plugin() -> bytes:
 
     # Create a zip file of the plugins directory
     shutil.make_archive(plugins_dir, 'zip', plugins_dir)
-
-    # # Read the zip file into memory and return as byte array
-    # with open(zip_path, 'rb') as f:
-    #     zip_content = f.read()
 
     return str(zip_path)
 

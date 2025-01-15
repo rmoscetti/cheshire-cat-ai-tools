@@ -1,3 +1,6 @@
+"""
+Client Cat that allows to send messages thanks to proper handling of the websockets
+"""
 from typing import Optional
 from cheshire_cat_api.config import Config
 from cheshire_cat_api import CatClient

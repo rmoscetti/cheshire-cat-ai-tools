@@ -48,7 +48,6 @@ class EvaluationSession(Base):
     start_time: Mapped[datetime] = Column(DateTime)
     end_time: Mapped[datetime] = Column(DateTime, nullable=True)
 
-
     evaluations: Mapped[List["Evaluation"]] = relationship(back_populates="session")
 
 
@@ -72,7 +71,12 @@ class Evaluation(Base):
 
     session: Mapped[EvaluationSession] = relationship(back_populates="evaluations")
 
+
 class EvalLogger:
+    """
+    
+    """
+
     def __init__(self, db_url: str = None):
         db_url = db_url or env["DATABASE_URL"]
         self.db_engine = create_engine(db_url)
@@ -136,7 +140,7 @@ class EvalLogger:
         success: bool,
         why: dict,
         type_: str,
-        user_id: str
+        user_id: str,
     ):
         eval = Evaluation(
             session_id=self.session.id,
@@ -146,8 +150,8 @@ class EvalLogger:
             expected_response=expected_response,
             success=success,
             why=why,
-            type=type_, 
-            user_id=user_id, 
+            type=type_,
+            user_id=user_id,
         )
         self.session.evaluations.append(eval)
         return eval

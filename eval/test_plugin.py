@@ -1,3 +1,10 @@
+"""
+Evaluation of the Cat agent
+
+evaluation of the cat agent performance for different prompts
+
+uses pytest to run tests, logs the results of the evaluation database
+"""
 from deploy_plugin import deploy_plugins
 from eval_logger import EvalLogger
 import pytest
