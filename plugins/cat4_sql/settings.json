@@ -1,0 +1,10 @@
+{
+    "data_source": "mysql",
+    "host": "192.168.100.134",
+    "port": "3306",
+    "username": "root",
+    "password": "mycat",
+    "database": "cat",
+    "allowed_tables": "example",
+    "character_encoding": "utf8"
+}
