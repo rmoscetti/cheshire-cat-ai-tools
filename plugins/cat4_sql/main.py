@@ -56,8 +56,7 @@ def extract_query(input_query):
     "database interaction", 
     "query the database",  
     "Retrieve info using SQL", 
-    "Get data from the database",
-    
+    "Get data from the database"
 ])
 def database(tool_input, cat):
     """
