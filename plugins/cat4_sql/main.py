@@ -51,7 +51,6 @@ def extract_query(input_query):
 
 @tool (examples=[
     "$database$", 
-    "$DATABASAE$", 
     "DB query", 
     "database interaction", 
     "query the database",  
