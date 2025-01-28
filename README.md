@@ -2,7 +2,7 @@
 ![Cheshire Cat 4.0](images/cheshire_cat_4.0.png)
 
 # Introduction
-The Cheshire Cat AI Toolkit for Industry 4.0/5.0 it is a young (no budget) project that aims to be dedicated to harnessing the power of conversational AI in industrial applications, enabling the integration of advanced Large Language Models (LLMs) in critical areas such as process monitoring, control and optimisation. Seamlessly integrated with the [Cheshire Cat AI](https://cheshire-cat-ai.github.io/docs/), an open source and AI-agnostic conversational framework for building AI agents, these tools provide a foundation for developing intelligent and adaptive industrial systems.
+The Cheshire Cat AI Toolkit for Industry 4.0/5.0 it is a young (no-budget) project that aims to be dedicated to harnessing the power of conversational AI in industrial applications, enabling the integration of advanced Large Language Models (LLMs) in critical areas such as process monitoring, control and optimisation. Seamlessly integrated with the [Cheshire Cat AI](https://cheshire-cat-ai.github.io/docs/), an open source and AI-agnostic conversational framework for building AI agents, these tools provide a foundation for developing intelligent and adaptive industrial systems.
 The initial (ambitious) idea is to integrate it into a smart food drying system to monitor and (hopefully) control the process by interacting with an LLM via dedicated CLIs and plugins.
 Below is a schematic of the idea:
 
