@@ -28,7 +28,7 @@ More to come...
     pip install -r requirements.txt
     ```
 
-# Cheshire Cat CLI
+# Cheshire Cat CLI (version 1.1)
 `cat_chat.py` is a python-based CLI for chatting with the Cheshire Cat AI. The script establishes a WebSocket connection to send messages and retrieve responses in real time. Its primary purpose is to communicate with the Cheshire Cat AI while prioritising the use of procedural memory by (optionally) eliminating history communications, which may currently be responsible for the AI agent not suggesting the use of procedural memory to the LLM. It also supports saving AI responses to a JSON file.
 
 ## Features
@@ -36,6 +36,10 @@ More to come...
 - **History Management**: Option to maintain or clear conversation history before sending messages.
 - **Save Responses**: Store server responses in a JSON file.
 - **Configurable**: Set user ID, authentication key, server URL, and other parameters via command-line arguments.
+- **Enable Logging**: Use `--log` to enable logging for debugging purposes.
+- **Customize Timeout**: Adjust the maximum wait time for AI responses using `--timeout`.
+- **Toggle Response Formats**: Use `--notext` to display the full JSON response instead of just AI-generated text.
+- **View AI Reasoning**: Enable `--reasoning` to display AI's thought process if available.
 
 ## Usage
 1. Ensure the Cheshire Cat AI server is running and accessible at the specified `--base_url` and `--port`.
@@ -46,28 +50,49 @@ python cat_chat.py "your message here" --user_id YOUR_USER_ID --auth_key YOUR_AU
 ```
 
 ## Command-Line Arguments
-| Argument      | Description                                                     | Default    | Required |
-|---------------|-----------------------------------------------------------------|------------|----------|
-| `message`     | The message to send to the server.                | N/A        | Yes      |
-| `--user_id`   | The user ID for authentication.                                | N/A        | Yes      |
-| `--auth_key`  | The authentication key (password) for the server.            | N/A        | Yes      |
-| `--base_url`  | The base URL (IP address) of the server.                       | `127.0.0.1`| No       |
-| `--port`      | The port number of the server.                           | `1865`     | No       |
-| `--history`   | Set to `false` to clear the conversation history before sending the message. | `false` | No       |
-| `--filename`  | The filename to save the JSON response from the server.        | N/A        | No       |
+
+| Argument      | Description                                                     | Default     | Required |
+|--------------|-----------------------------------------------------------------|-------------|----------|
+| `message`     | The message to send to the server.                             | N/A         | Yes      |
+| `--user_id`   | The user ID for authentication.                                | N/A         | Yes      |
+| `--auth_key`  | The authentication key (password) for the server.              | N/A         | Yes      |
+| `--base_url`  | The base URL (IP address) of the server.                        | `127.0.0.1` | No       |
+| `--port`      | The port number of the server.                                 | `1865`      | No       |
+| `--history`   | Clears chat history before sending a message when `false`.     | `false`     | No       |
+| `--filename`  | The filename to save the JSON response from the server.        | N/A         | No       |
+| `--log`       | Enables logging to display debug information.                  | Disabled    | No       |
+| `--timeout`   | Maximum wait time for AI response (in seconds).                | `300` sec   | No       |
+| `--notext`    | Displays the full JSON response instead of just AI text.       | Disabled    | No       |
+| `--reasoning` | Displays AI reasoning alongside the response if available.     | Disabled    | No       |
 
 ## Examples
-To send a message and save the response:
+To save the AI response to a JSON file:
 ```bash
-python cat_chat.py "Is the process running?" --user_id USER123 --auth_key ABC123 --filename response.json
+python cat_chat.py "your question" --user_id USER123 --auth_key ABC123 --filename response.json
 ```
 To send a message without clearing the chat history:
 ```bash
-python cat_chat.py "Is the process running?" --user_id USER123 --auth_key ABC123 --history true
+python cat_chat.py "your question" --user_id USER123 --auth_key ABC123 --history
 ```
 To clear history before sending a message:
 ```bash
-python cat_chat.py "Is the process running?" --user_id USER123 --auth_key ABC123 --history false
+python cat_chat.py "your question" --user_id USER123 --auth_key ABC123
+```
+To enable logging and see debug output:
+```bash
+python cat_chat.py "your question" --user_id USER123 --auth_key ABC123 --log
+```
+To adjust the response timeout to 600 seconds:
+```bash
+python cat_chat.py "your question" --user_id USER123 --auth_key ABC123 --timeout 600
+```
+To display AI reasoning alongside its response:
+```bash
+python cat_chat.py "your question" --user_id USER123 --auth_key ABC123 --reasoning
+```
+To receive the full JSON response instead of extracted AI text:
+```bash
+python cat_chat.py "your question" --user_id USER123 --auth_key ABC123 --notext
 ```
 
 # Contributing
@@ -78,4 +103,5 @@ This project is licensed under the MIT License. See the [LICENSE](https://choose
 
 # Author
 Roberto Moscetti rmoscetti@unitus.it
+
 (pls contact me if you want to contribute to the project)
