@@ -125,54 +125,6 @@ def database(tool_input, cat):
         output = "You are sorry. You don't know how to extract data from the database."
     return output
 
-@hook(priority=0)
-def before_cat_bootstrap(cat) -> None:
-    """
-    Hook to perform system checks before the CAT tool starts.
-    This hook ensures that necessary packages and libraries are installed and configured.
-
-    Args:
-        cat: The context object for the CAT tool.
-    """
-    check_pkg_config()
-    check_libmysqlclient()
-    check_mysqlclient_module()
-
-
-def check_pkg_config():
-    """
-    Checks for the presence of pkg-config and installs it if missing.
-    """
-    try:
-        subprocess.check_call(["pkg-config", "--version"])
-    except subprocess.CalledProcessError:
-        print("Installing pkg-config")
-        subprocess.check_call(["apt-get", "-y", "update"])
-        subprocess.check_call(["apt-get", "-y", "install", "pkg-config"])
-
-
-def check_libmysqlclient():
-    """
-    Checks for the presence of the default MySQL client library and installs it if missing.
-    """
-    try:
-        subprocess.check_call(["pkg-config", "--exists", "default-libmysqlclient"])
-    except subprocess.CalledProcessError:
-        print("Installing default-libmysqlclient-dev")
-        subprocess.check_call(["apt-get", "-y", "install", "default-libmysqlclient-dev"])
-
-
-def check_mysqlclient_module():
-    """
-    Checks for the mysqlclient Python module and installs it if missing.
-    """
-    try:
-        import mysqlclient
-    except ImportError:
-        print("Installing mysqlclient")
-        subprocess.check_call(["pip", "install", "mysqlclient"])
-
-
 def connect(cat):
     """
     Connects to the specified SQL database based on settings from the CAT context.
