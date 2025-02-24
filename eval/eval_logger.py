@@ -65,11 +65,69 @@ class Evaluation(Base):
     parsed_response: Mapped[str] = Column(String)
     expected_response: Mapped[str] = Column(String)
     success: Mapped[bool] = Column(Integer)
-    why: Mapped[dict] = Column(JSON)
     type: Mapped[str] = Column(String)
     user_id: Mapped[str] = Column(String)
+    why_input: Mapped[str] = Column(String)
+    why_intermediate: Mapped[dict] = Column(JSON)
+    why_agent_output: Mapped[dict] = Column(JSON)
 
     session: Mapped[EvaluationSession] = relationship(back_populates="evaluations")
+    episodic_memory: Mapped[List["EpisodicMemory"]] = relationship(back_populates="evaluation")
+    declarative_memory: Mapped["DeclarativeMemory"] = relationship(back_populates="evaluation")
+    procedural_memory: Mapped[List["ProceduralMemory"]] = relationship(back_populates="evaluation")
+    model_interaction: Mapped[List["ModelInteraction"]] = relationship(back_populates="evaluation")
+
+
+class EpisodicMemory(Base):
+    """
+    Stores information about a single evaluation.
+    """
+
+    __tablename__ = "episodic_memory"
+
+    id: Mapped[int] = Column(Integer, primary_key=True)
+    evaluation_id: Mapped[int] = Column(Integer, ForeignKey("evaluation.id"))    
+    meta_source: Mapped[str] = Column(String)
+    meta_when: Mapped[datetime] = Column(DateTime)
+    page_content: Mapped[str] = Column(String)
+    type: Mapped[str] = Column(String)
+    score: Mapped[float] = Column(Float)
+
+    evaluation: Mapped[Evaluation] = relationship(back_populates="memory_episodic")
+
+class DeclarativeMemory(Base):
+    __tablename__ = "declarative_memory"
+    id: Mapped[int] = Column(Integer, primary_key=True)
+    evaluation_id: Mapped[int] = Column(Integer, ForeignKey("evaluation.id"))
+
+    evaluation: Mapped[Evaluation] = relationship(back_populates="memory_declarative")
+
+class ProceduralMemory(Base):
+    __tablename__ = "procedural_memory"
+    id: Mapped[int] = Column(Integer, primary_key=True)
+    evaluation_id: Mapped[int] = Column(Integer, ForeignKey("evaluation.id"))
+    meta_source: Mapped[str] = Column(String)
+    meta_type: Mapped[str] = Column(String)
+    meta_trigger_type: Mapped[str] = Column(String)
+    meta_when: Mapped[datetime] = Column(DateTime)
+    page_content: Mapped[str] = Column(String)
+    type: Mapped[str] = Column(String)
+    score: Mapped[float] = Column(Float)
+
+    evaluation: Mapped[Evaluation] = relationship(back_populates="memory_procedural")
+
+class ModelInteraction(Base):
+    __tablename__ = "model_interaction"
+    id: Mapped[int] = Column(Integer, primary_key=True)
+    evaluation_id: Mapped[int] = Column(Integer, ForeignKey("evaluation.id"))
+    meta_type: Mapped[str] = Column(String)
+    source: Mapped[str] = Column(String)
+    prompt: Mapped[str] = Column(String)
+    input_tokens: Mapped[int] = Column(Integer)
+    started_at: Mapped[datetime] = Column(DateTime)
+    reply: Mapped[dict] = Column(JSON)
+
+
 
 
 class EvalLogger:
@@ -142,6 +200,35 @@ class EvalLogger:
         type_: str,
         user_id: str,
     ):
+        
+        episodic_memory = [
+            EpisodicMemory(
+                meta_source=memory['metadata']["source"],
+                meta_when=memory['metadata']["when"],
+                page_content=memory["content"],
+                type=memory["type"],
+                score=memory["score"],
+            )
+            for memory in why['memory']["episodic"]
+        ]
+
+        declarative_memory = DeclarativeMemory()
+
+        procedural_memory = [
+            ProceduralMemory(
+                meta_source=memory['metadata']["source"],
+                meta_type=memory['metadata']["type"],
+                meta_trigger_type=memory['metadata']["trigger_type"],
+                meta_when=memory['metadata']["when"],
+                page_content=memory["content"],
+                type=memory["type"],
+                score=memory["score"],
+            )
+            for memory in why['memory']["procedural"]
+        ]
+
+        
+        
         eval = Evaluation(
             session_id=self.session.id,
             prompt=prompt,
@@ -149,9 +236,14 @@ class EvalLogger:
             parsed_response=parsed_response,
             expected_response=expected_response,
             success=success,
-            why=why,
+            why_input=why["input"],
             type=type_,
             user_id=user_id,
+            episodic_memory=episodic_memory,
+            declarative_memory=declarative_memory,
+            procedural_memory=procedural_memory,
+            why_intermediate=why["intermediate_steps"],
+            why_agent_output=why["agent_output"],
         )
         self.session.evaluations.append(eval)
         return eval
