@@ -1,0 +1,27 @@
+[project]
+authors = [{ name = "Simone Massaro", email = "simone.massaro@mone27.net" }]
+dependencies = []
+name = "drymulator"
+requires-python = ">= 3.11"
+version = "0.1.0"
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.pixi.project]
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[tool.pixi.pypi-dependencies]
+drymulator = { path = ".", editable = true }
+
+[tool.pixi.tasks]
+run-server = "uvicorn drymulator.server.main:app --reload"
+generate-client = "python generate-client.py"
+
+[tool.pixi.dependencies]
+fastapi = ">=0.115.11,<0.116"
+sqlmodel = ">=0.0.23,<0.0.24"
+ipykernel = ">=6.29.5,<7"
+openapi-python-client = ">=0.24.0,<0.25"
