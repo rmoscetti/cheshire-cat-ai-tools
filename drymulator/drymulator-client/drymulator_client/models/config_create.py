@@ -14,11 +14,11 @@ T = TypeVar("T", bound="ConfigCreate")
 class ConfigCreate:
     """
     Attributes:
-        start_time (Union[None, Unset, datetime.datetime]):  Default: isoparse('2025-03-03T23:39:32.819271').
+        start_time (Union[None, Unset, datetime.datetime]):  Default: isoparse('2025-03-04T10:50:23.844161').
         time_speed (Union[None, Unset, float]):  Default: 10.0.
     """
 
-    start_time: Union[None, Unset, datetime.datetime] = isoparse("2025-03-03T23:39:32.819271")
+    start_time: Union[None, Unset, datetime.datetime] = isoparse("2025-03-04T10:50:23.844161")
     time_speed: Union[None, Unset, float] = 10.0
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 

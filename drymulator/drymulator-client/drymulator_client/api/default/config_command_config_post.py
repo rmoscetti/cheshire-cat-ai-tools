@@ -18,7 +18,7 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "post",
-        "url": "/command/start",
+        "url": "/command/config",
     }
 
     _body = body.to_dict()
@@ -62,7 +62,7 @@ def sync_detailed(
     client: Union[AuthenticatedClient, Client],
     body: ConfigCreate,
 ) -> Response[Union[HTTPValidationError, bool]]:
-    """Start
+    """Config
 
     Args:
         body (ConfigCreate):
@@ -91,7 +91,7 @@ def sync(
     client: Union[AuthenticatedClient, Client],
     body: ConfigCreate,
 ) -> Optional[Union[HTTPValidationError, bool]]:
-    """Start
+    """Config
 
     Args:
         body (ConfigCreate):
@@ -115,7 +115,7 @@ async def asyncio_detailed(
     client: Union[AuthenticatedClient, Client],
     body: ConfigCreate,
 ) -> Response[Union[HTTPValidationError, bool]]:
-    """Start
+    """Config
 
     Args:
         body (ConfigCreate):
@@ -142,7 +142,7 @@ async def asyncio(
     client: Union[AuthenticatedClient, Client],
     body: ConfigCreate,
 ) -> Optional[Union[HTTPValidationError, bool]]:
-    """Start
+    """Config
 
     Args:
         body (ConfigCreate):
