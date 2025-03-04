@@ -7,6 +7,8 @@ services:
       - mariadb
     env_file:
       - .cat
+      - path: .cat.local
+        required: false
     ports:
       - 1865:80
       - 5678:5678
@@ -23,6 +25,8 @@ services:
     container_name: qdrant
     env_file:
       - .qdrant
+      - path: .qdrant.local
+        required: false
     ports:
       - 6333:6333
     expose:
@@ -40,6 +44,8 @@ services:
       - 3306
     env_file:
       - .mariadb
+      - path: .mariadb.local
+        required: false
     volumes:
       - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/mysql:/var/lib/mysql
     restart: unless-stopped
@@ -52,5 +58,7 @@ services:
       - 7435:8000
     env_file:
       - .drymulator
+      - path: .drymulator.local
+        required: false
     volumes:
       - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/drymulator:/app
