@@ -17,7 +17,7 @@ platforms = ["linux-64"]
 drymulator = { path = ".", editable = true }
 
 [tool.pixi.tasks]
-run-server = "uvicorn drymulator.server.main:app --reload"
+run-server = "uvicorn drymulator.server:app --reload"
 generate-client = "python generate-client.py"
 
 [tool.pixi.dependencies]
@@ -25,3 +25,4 @@ fastapi = ">=0.115.11,<0.116"
 sqlmodel = ">=0.0.23,<0.0.24"
 ipykernel = ">=6.29.5,<7"
 openapi-python-client = ">=0.24.0,<0.25"
+pydantic-settings = ">=2.8.1,<3"

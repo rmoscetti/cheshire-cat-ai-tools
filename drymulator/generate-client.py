@@ -1,5 +1,5 @@
 from fastapi.openapi.utils import get_openapi
-from drymulator.server.main import app
+from drymulator.server import app
 import json
 import subprocess
 
@@ -13,7 +13,7 @@ with open("openapi.json", "w") as f:
     json.dump(openapi_schema, f)
 
 subprocess.run(
-    "openapi-python-client generate --path openapi.json",
+    "openapi-python-client generate --path openapi.json --config generate-client-config.yaml --meta=setup --overwrite",
     shell=True,
     check=True,
     capture_output=False,
