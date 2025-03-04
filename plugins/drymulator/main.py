@@ -44,5 +44,16 @@ def current_weight(tool_input, cat):
     """
     settings = cat.mad_hatter.get_plugin().load_settings()
     with Client(settings["server_url"]) as client:
-        state = current_state_state_current_get.sync(client)
-        return state["weight"]
+        state = current_state_state_current_get.sync(client=client)
+        return str(state.weight)
+
+
+@tool()
+def current_fraction_initial(tool_input, cat):
+    """
+    Query the drying system to get the current weight of the product.
+    """
+    settings = cat.mad_hatter.get_plugin().load_settings()
+    with Client(settings["server_url"]) as client:
+        state = current_state_state_current_get.sync(client=client)
+        return str(state.fraction_initial)

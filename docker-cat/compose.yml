@@ -5,6 +5,7 @@ services:
     depends_on:
       - qdrant
       - mariadb
+      - drymulator
     env_file:
       - .cat
       - path: .cat.local
