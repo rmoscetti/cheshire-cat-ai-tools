@@ -14,7 +14,7 @@ services:
       - 5678:5678
     volumes:
       - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/static:/app/cat/static
-      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/plugins:/app/cat/plugins
+      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/plugins:/app/cat/plugins
       - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/data:/app/cat/data
       # mount the drymulator-client directory to the /drymulator-client directory in the container so it can be accessed by the cheshire-cat-core service and installed as a dependency
       - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/drymulator/drymulator-client:/drymulator-client
