@@ -6,3 +6,7 @@ RUN apt-get update && apt-get install -y \
     pkg-config \
     default-libmysqlclient-dev \
     && rm -rf /var/lib/apt/lists/*
+
+COPY install_pip_editble_deps.sh .
+# need to install at runtime as they are not available at build time
+CMD bash install_pip_editble_deps.sh && python3 -m cat.main 
