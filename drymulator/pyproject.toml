@@ -1,6 +1,6 @@
 [project]
 authors = [{ name = "Simone Massaro", email = "simone.massaro@mone27.net" }]
-dependencies = []
+dependencies = ["fastapi", "sqlmodel", "pydantic-settings"]
 name = "drymulator"
 requires-python = ">= 3.11"
 version = "0.1.0"

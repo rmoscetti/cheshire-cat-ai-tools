@@ -1,11 +1,9 @@
 services:
-
   cheshire-cat-core:
-    image: rmoscetti_cheshire_cat:1.7.1
-    container_name: rmoscetti_cat
+    build: .
+    container_name: cat_181
     depends_on:
       - qdrant
-      - ollama
       - mariadb
     env_file:
       - .cat
@@ -13,14 +11,16 @@ services:
       - 1865:80
       - 5678:5678
     volumes:
-      - /home/r.moscetti/cheshire-cat-ai/static:/app/cat/static
-      - /home/r.moscetti/cheshire-cat-ai/plugins:/app/cat/plugins
-      - /home/r.moscetti/cheshire-cat-ai/data:/app/cat/data
+      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/static:/app/cat/static
+      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/plugins:/app/cat/plugins
+      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/data:/app/cat/data
+      # mount the drymulator-client directory to the /drymulator-client directory in the container so it can be accessed by the cheshire-cat-core service and installed as a dependency
+      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/drymulator/drymulator-client:/drymulator-client
     restart: unless-stopped
 
   qdrant:
     image: qdrant/qdrant:latest
-    container_name: rmoscetti_qdrant
+    container_name: qdrant
     env_file:
       - .qdrant
     ports:
@@ -28,30 +28,12 @@ services:
     expose:
       - 6333
     volumes:
-      - /home/r.moscetti/cheshire-cat-ai/qdrant_memory:/qdrant/storage
-    restart: unless-stopped
-    
-  ollama:
-    image: ollama/ollama:latest
-    container_name: rmoscetti_ollama
-    ports:
-      - 11444:11434
-    expose:
-      - 11434
-    volumes:
-      - /home/r.moscetti/ollama:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: all
-              capabilities: [gpu]
+      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/qdrant_memory:/qdrant/storage
     restart: unless-stopped
 
   mariadb:
     image: mariadb:latest
-    container_name: rmoscetti_mariadb
+    container_name: mariadb
     ports:
       - 3306:3306
     expose:
@@ -59,5 +41,16 @@ services:
     env_file:
       - .mariadb
     volumes:
-      - /home/r.moscetti/cheshire-cat-ai/mysql:/var/lib/mysql
+      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/mysql:/var/lib/mysql
     restart: unless-stopped
+
+  drymulator:
+    build:
+      context: ../drymulator
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    env_file:
+      - .drymulator
+    volumes:
+      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/drymulator:/app
