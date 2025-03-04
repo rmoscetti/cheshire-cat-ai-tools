@@ -7,12 +7,12 @@ Interface with the drying simulator (drymulator)
 """
 
 from cat.mad_hatter.decorators import tool, hook
-from cat import mad_hatter
+import cat
 from drymulator_client.api.default import current_state_state_current_get
 from drymulator_client.client import Client
 
 
-settings = mad_hatter.get_plugin().load_settings()
+settings = cat.mad_hatter.plugins["drymulator"].load_settings()
 
 ###########
 ## HOOKS ##
