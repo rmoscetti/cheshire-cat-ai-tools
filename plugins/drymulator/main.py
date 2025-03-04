@@ -11,7 +11,6 @@ from drymulator_client.api.default import current_state_state_current_get
 from drymulator_client.client import Client
 
 
-
 ###########
 ## HOOKS ##
 ###########
@@ -39,7 +38,7 @@ def agent_prompt_prefix(prefix, cat) -> str:
 
 
 @tool()
-def current_weight(cat):
+def current_weight(tool_input, cat):
     """
     Query the drying system to get the current weight of the product.
     """
