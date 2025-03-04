@@ -17,7 +17,7 @@ services:
       - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/plugins:/app/cat/plugins
       - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/data:/app/cat/data
       # mount the drymulator-client directory to the /drymulator-client directory in the container so it can be accessed by the cheshire-cat-core service and installed as a dependency
-      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/drymulator/drymulator-client:/drymulator-client
+      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/drymulator/drymulator-client:/drymulator-client
     restart: unless-stopped
 
   qdrant:
