@@ -55,7 +55,7 @@ class StatePublic(StateBase):
     pass
 
 
-engine = create_engine(settings.database_url, echo=True)
+engine = create_engine(settings.database_url)
 
 
 def create_db_and_tables():
