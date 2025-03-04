@@ -13,8 +13,15 @@ from sqlmodel import (
 from datetime import datetime
 import csv
 import importlib.resources
+from pydantic_settings import BaseSettings
 
-DATABASE_URL = "sqlite:///./test.db"
+
+# automatically loads settings from the enviroment variables
+class Settings(BaseSettings):
+    database_url: str = "sqlite:///./test.db"
+
+
+settings = Settings()
 
 
 class ConfigBase(SQLModel):
@@ -48,7 +55,7 @@ class StatePublic(StateBase):
     pass
 
 
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(settings.database_url, echo=True)
 
 
 def create_db_and_tables():
@@ -62,9 +69,16 @@ def get_session():
 
 def read_state_test_data(session: Session):
     """Reads data from a CSV file and returns a list of dictionaries."""
-    with importlib.resources.open_text("drymulator.server", "test_data.csv") as file:
+    with importlib.resources.open_text("drymulator", "test_data.csv") as file:
         for row in csv.DictReader(file):
             session.add(State.model_validate(row))
+    session.commit()
+
+
+def maybe_create_config(session: Session):
+    existing_config = session.exec(select(Config)).first()
+    if not existing_config:
+        session.add(Config())
     session.commit()
 
 
@@ -72,6 +86,7 @@ def read_state_test_data(session: Session):
 async def lifespan(app: FastAPI):
     create_db_and_tables()
     with Session(engine) as session:
+        maybe_create_config(session)
         read_state_test_data(session)
     yield
 
@@ -81,8 +96,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-@app.post("/command/start")
-async def start(
+@app.post("/command/config")
+async def config(
     config: ConfigCreate,
     session: Session = Depends(get_session),
 ) -> bool:
@@ -98,7 +113,7 @@ async def start(
 
 
 @app.get("/state/current")
-async def get_current_state(session: Session = Depends(get_session)) -> StatePublic:
+async def current_state(session: Session = Depends(get_session)) -> StatePublic:
     config = session.exec(select(Config)).first()
     actual_time = datetime.now()
     diff_seconds = (actual_time - config.start_time).total_seconds()
@@ -110,7 +125,7 @@ async def get_current_state(session: Session = Depends(get_session)) -> StatePub
 
 # need to find a better name for this
 @app.get("/state/time")
-async def get_state(
+async def state_time(
     second_after: int, session: Session = Depends(get_session)
 ) -> StatePublic:
     state = session.exec(
