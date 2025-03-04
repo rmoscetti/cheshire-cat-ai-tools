@@ -7,12 +7,10 @@ Interface with the drying simulator (drymulator)
 """
 
 from cat.mad_hatter.decorators import tool, hook
-import cat
 from drymulator_client.api.default import current_state_state_current_get
 from drymulator_client.client import Client
 
 
-settings = cat.mad_hatter.plugins["drymulator"].load_settings()
 
 ###########
 ## HOOKS ##
@@ -45,6 +43,7 @@ def current_weight(cat):
     """
     Query the drying system to get the current weight of the product.
     """
+    settings = cat.mad_hatter.get_plugin().load_settings()
     with Client(settings["server_url"]) as client:
         state = current_state_state_current_get.sync(client)
         return state["weight"]
