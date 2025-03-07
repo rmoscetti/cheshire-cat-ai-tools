@@ -9,6 +9,7 @@ from sqlmodel import (
     create_engine,
     func,
     select,
+    delete
 )
 from datetime import datetime
 import csv
@@ -27,6 +28,7 @@ settings = Settings()
 class ConfigBase(SQLModel):
     start_time: Optional[datetime] = Field(default=datetime.now())
     time_speed: Optional[float] = Field(default=10.0)
+    is_active: Optional[bool] = Field(default=True)
 
 
 class Config(ConfigBase, table=True):
@@ -47,9 +49,11 @@ class StateBase(SQLModel):
     weight: float
 
 
-class State(StateBase, table=True):
+class HistoryState(StateBase, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
 
+class CurrentState(StateBase, table=True):
+    id: Optional[int] = Field(default=None, primary_key=True)
 
 class StatePublic(StateBase):
     pass
@@ -69,9 +73,12 @@ def get_session():
 
 def read_state_test_data(session: Session):
     """Reads data from a CSV file and returns a list of dictionaries."""
+    # if table already exist skip this
+    if session.exec(select(HistoryState)).first():
+        return
     with importlib.resources.open_text("drymulator", "test_data.csv") as file:
         for row in csv.DictReader(file):
-            session.add(State.model_validate(row))
+            session.add(HistoryState.model_validate(row))
     session.commit()
 
 
@@ -81,6 +88,22 @@ def maybe_create_config(session: Session):
         session.add(Config())
     session.commit()
 
+def reset_current_state(session: Session):
+    session.exec(delete(CurrentState))
+    state = CurrentState.model_validate(session.exec(select(HistoryState).order_by(HistoryState.time_seconds)).first())
+    session.add(state)
+
+
+def init_state_config(session: Session):
+    config = session.exec(select(Config)).first()
+    if not config:
+        config = Config()
+        session.add(config)
+    state = session.exec(select(CurrentState)).first()
+    if not state:
+        reset_current_state(session)
+    session.commit()
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -88,40 +111,64 @@ async def lifespan(app: FastAPI):
     with Session(engine) as session:
         maybe_create_config(session)
         read_state_test_data(session)
+        init_state_config(session)
     yield
 
+
+def update_current_state(session: Session) -> CurrentState:
+    config = session.exec(select(Config)).first()
+    if not config.is_active:
+        return session.exec(select(CurrentState)).first()
+    
+    actual_time = datetime.now()
+    diff_seconds = (actual_time - config.start_time).total_seconds() * config.time_speed
+    target_state = session.exec(
+        select(HistoryState).order_by(func.abs(HistoryState.time_seconds - diff_seconds))
+    ).first()
+
+    current_state = CurrentState.model_validate(target_state)
+    
+    session.add(target_state)
+    session.commit()
+    return current_state
 
 # --- FastAPI App ---
 
 app = FastAPI(lifespan=lifespan)
 
 
-@app.post("/command/config")
+@app.post("/command/reset")
 async def config(
     config: ConfigCreate,
     session: Session = Depends(get_session),
 ) -> bool:
-    existing_config = session.exec(select(Config)).first()
+    session.exec(delete(Config))
     config = Config.model_validate(config)
-    if existing_config:
-        existing_config.start_time = config.start_time
-        existing_config.time_speed = config.time_speed
-    else:
-        session.add(config)
+    session.add(config)
+    reset_current_state(session)
     session.commit()
     return True
 
+@app.post("/command/pause")
+async def pause(session: Session = Depends(get_session)) -> bool:
+    config = session.exec(select(Config)).first()
+    config.is_active = False
+    session.add(config)
+    session.commit()
+    return True
+
+@app.post("/command/start")
+async def restart(session: Session = Depends(get_session)) -> bool:
+    config = session.exec(select(Config)).first()
+    config.is_active = True
+    session.add(config)
+    session.commit()
+    return True
 
 @app.get("/state/current")
 async def current_state(session: Session = Depends(get_session)) -> StatePublic:
-    config = session.exec(select(Config)).first()
-    actual_time = datetime.now()
-    diff_seconds = (actual_time - config.start_time).total_seconds()
-    state = session.exec(
-        select(State).order_by(func.abs(State.time_seconds - diff_seconds))
-    ).first()
-    return state
-
+    state = update_current_state(session)
+    return StatePublic.model_validate(state)
 
 # need to find a better name for this
 @app.get("/state/time")
@@ -129,6 +176,11 @@ async def state_time(
     second_after: int, session: Session = Depends(get_session)
 ) -> StatePublic:
     state = session.exec(
-        select(State).order_by(func.abs(State.time_seconds - second_after))
+        select(HistoryState).order_by(func.abs(HistoryState.time_seconds - second_after))
     ).first()
     return state
+
+@app.get("/state/get-config")
+async def get_config(session: Session = Depends(get_session)) -> ConfigPublic:
+    config = session.exec(select(Config)).first()
+    return ConfigPublic.model_validate(config)
