@@ -57,4 +57,11 @@ class SuperCatClient:
     def __del__(self):
         self.cat_client.close()
     
+    def __enter__(self):
+        """Enter the runtime context related to this object."""
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """Exit the runtime context and clean up resources."""
+        self.close()
 

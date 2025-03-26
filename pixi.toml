@@ -26,3 +26,5 @@ polars = ">=1.22.0,<2"
 
 [pypi-dependencies]
 cheshire-cat-api = "*"
+weave = ">=0.51.39, <0.52"
+drymulator_client={path="drymulator/drymulator-client"}
