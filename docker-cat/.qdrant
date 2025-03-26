@@ -2,4 +2,4 @@
 TZ=Europe/Rome
 
 # Qdrant server
-QDRANT__SERVICE__API_KEY=""
+QDRANT__SERVICE__API_KEY="thisismyapikey"

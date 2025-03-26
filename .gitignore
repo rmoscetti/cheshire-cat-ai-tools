@@ -8,3 +8,5 @@ __pycache__
 *.zip
 *.sqlite3
 .vscode/
+qdrant_memory
+mysql

@@ -14,11 +14,11 @@ services:
       - 1865:80
       - 5678:5678
     volumes:
-      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/static:/app/cat/static
-      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/plugins:/app/cat/plugins
-      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/data:/app/cat/data
+      - ${PWD}/docker-cat/static:/app/cat/static
+      - ${PWD}/plugins:/app/cat/plugins
+      - ${PWD}/docker-cat/data:/app/cat/data
       # mount the drymulator-client directory to the /drymulator-client directory in the container so it can be accessed by the cheshire-cat-core service and installed as a dependency
-      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/drymulator/drymulator-client:/drymulator-client
+      - ${PWD}/drymulator/drymulator-client:/drymulator-client
     restart: unless-stopped
 
   qdrant:
@@ -33,7 +33,7 @@ services:
     expose:
       - 6333
     volumes:
-      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/qdrant_memory:/qdrant/storage
+      - ${PWD}/docker-cat/qdrant_memory:/qdrant/storage
     restart: unless-stopped
 
   mariadb:
@@ -48,7 +48,7 @@ services:
       - path: .mariadb.local
         required: false
     volumes:
-      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/mysql:/var/lib/mysql
+      - ${PWD}/docker-cat/mysql:/var/lib/mysql
     restart: unless-stopped
 
   drymulator:
@@ -62,4 +62,4 @@ services:
       - path: .drymulator.local
         required: false
     volumes:
-      - /home/moscetti/cheshire-cat-ai/cheshire-cat-ai-tools/docker-cat/drymulator:/app
+      - ${PWD}/docker-cat/drymulator:/app
