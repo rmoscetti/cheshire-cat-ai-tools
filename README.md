@@ -1,3 +1,19 @@
+# Usage 
+
+## Setup
+
+```
+wandb login
+```
+
+to start docker container:
+
+```
+docker compose -f docker-cat/compose.yml up --build
+```
+
+important! this needs to be run in the root of the repository
+
 # Cheshire Cat AI Toolkit for Industry 4.0/5.0 applications
 ![Cheshire Cat 4.0](images/cheshire_cat_4.0.png)
 

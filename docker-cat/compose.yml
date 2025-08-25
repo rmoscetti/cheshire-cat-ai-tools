@@ -1,7 +1,7 @@
 services:
   cheshire-cat-core:
     build: .
-    container_name: cat_181
+    container_name: cat
     depends_on:
       - qdrant
       - mariadb

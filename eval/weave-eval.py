@@ -1,4 +1,5 @@
 import weave
+
 from super_cat_client import SuperCatClient
 from cheshire_cat_api.config import Config
 import re
