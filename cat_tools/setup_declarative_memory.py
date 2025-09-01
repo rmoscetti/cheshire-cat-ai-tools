@@ -1,6 +1,8 @@
 from cheshire_cat_api import CatClient
 import requests
 from tqdm import tqdm
+from pyprojroot import here
+import pandas as pd
 
 client = CatClient()
 
@@ -30,9 +32,17 @@ def put_sentences(sentences: list[str]):
         results.append(result)
     return results
 
-def main():
+
+def read_sentences():
+    path = here("eval/declarative_memory.csv")
+    df = pd.read_csv(path)
+    return df['risposta'].tolist()
+    
+
+def setup_declarative_memory():
     wipe_declarative_memory()
+    sentences = read_sentences()
     put_sentences(sentences)
 
 if __name__ == "__main__":
-    main()
+    setup_declarative_memory()

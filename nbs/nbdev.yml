@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "cheshire-cat-ai-tools"
+  site-url: "https://rmoscetti.github.io/cheshire-cat-ai-tools"
+  description: "Cheshire Cat AI Toolkit for Industry 4.0/5.0 applications"
+  repo-branch: main
+  repo-url: "https://github.com/rmoscetti/cheshire-cat-ai-tools"
