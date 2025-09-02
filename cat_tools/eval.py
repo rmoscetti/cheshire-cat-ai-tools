@@ -57,7 +57,7 @@ class CatModel(weave.Model):
     @weave.op()
     async def predict(self, prompt: str) -> dict:
         response = self.client.send(prompt)
-        self.client.delete_episodic_memory()
+        self.client.wipe_episodic_memory()
         response["model_name"] = self.name
         response["text_clean"] = remove_think(response["content"])
         return response
@@ -111,13 +111,20 @@ similarity_scorer = CatEmbeddingSimilarityScorer(
     threshold=0.8,
 )
 
-# %% ../nbs/weave_eval.ipynb 15
+# %% ../nbs/weave_eval.ipynb 17
 async def eval_configs(dataset, n_rep=3, model_confs=conf_variants):
+    client = SuperCatClient()
+    prepare_episodic_memory(client)
     evaluation = weave.Evaluation(
         dataset=list(repeat_dataset(dataset, n_rep)),
         scorers=[hallucination_scorer, similarity_scorer],
     )
     for name, conf in tqdm(model_confs.items(), total=len(model_confs)):
-        print(f"Evaluating {name}...")
+        print(f"Evaluating {name} with memory")
+        model = CatModel(name, conf)
+        await evaluation.evaluate(model)
+    client.wipe_declarative_memory()
+    for name, conf in tqdm(model_confs.items(), total=len(model_confs)):
+        print(f"Evaluating {name} with memory")
         model = CatModel(name, conf)
         await evaluation.evaluate(model)

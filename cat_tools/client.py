@@ -3,7 +3,7 @@
 # %% auto 0
 __all__ = ['SuperCatClient', 'LLMSetting', 'LLMOpenAIChatConfig', 'LLMOllamaConfig', 'LLMGeminiChatConfig', 'LLMSettings']
 
-# %% ../nbs/super_client.ipynb 1
+# %% ../nbs/super_client.ipynb 2
 from typing import Optional
 from cheshire_cat_api.config import Config
 from cheshire_cat_api import CatClient
@@ -12,10 +12,10 @@ import requests
 import time
 from queue import Queue
 import json
+from tqdm.auto import tqdm
 
 
-
-# %% ../nbs/super_client.ipynb 2
+# %% ../nbs/super_client.ipynb 3
 class SuperCatClient:
     """
     A Wrapper around the official client for sane handling of the websockets connections
@@ -85,8 +85,31 @@ class SuperCatClient:
         )
         r.raise_for_status()
         return r
+    
 
-    def delete_episodic_memory(self):
+    def put_sentence(self, sentence: str):
+        """Put sentence in declarative memory"""
+        url = f'{self.host}/memory/collections/declarative/points'
+        json_data = {
+            "content": sentence,
+            "metadata": {}
+        }
+        response = requests.post(url, json=json_data)
+        response.raise_for_status()
+        return response
+
+    def put_sentences(self, sentences: list[str]):
+        results = []
+        for sentence in tqdm(sentences, desc="Adding to declarative memory"):
+            result = self.put_sentence(sentence)
+            results.append(result)
+        return results
+
+
+    def wipe_declarative_memory(self):
+        return self.cat_client.memory.wipe_single_collection("declarative")
+    
+    def wipe_episodic_memory(self):
         r = requests.delete(f"{self.host}/memory/conversation_history")
         r.raise_for_status()
         return r
@@ -110,17 +133,17 @@ class SuperCatClient:
         """Exit the runtime context and clean up resources."""
         self.close()
 
-# %% ../nbs/super_client.ipynb 6
+# %% ../nbs/super_client.ipynb 7
 from pydantic import BaseModel, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import ClassVar
 from pyprojroot import here
 
-# %% ../nbs/super_client.ipynb 7
+# %% ../nbs/super_client.ipynb 8
 class LLMSetting(BaseModel):
     pass
 
-# %% ../nbs/super_client.ipynb 8
+# %% ../nbs/super_client.ipynb 9
 class LLMOpenAIChatConfig(LLMSetting):
     name: ClassVar[str] = "LLMOpenAIChatConfig"
     openai_api_key: str
@@ -128,7 +151,7 @@ class LLMOpenAIChatConfig(LLMSetting):
     temperature: float = 1.0
     streaming: bool = False
 
-# %% ../nbs/super_client.ipynb 10
+# %% ../nbs/super_client.ipynb 11
 class LLMOllamaConfig(LLMSetting):
     name: ClassVar[str] = "LLMOllamaConfig"
     base_url: str
@@ -138,7 +161,7 @@ class LLMOllamaConfig(LLMSetting):
     repeat_penalty: float = 1.1
     temperature: float = 1.0
 
-# %% ../nbs/super_client.ipynb 11
+# %% ../nbs/super_client.ipynb 12
 class LLMGeminiChatConfig(LLMSetting):
     name: ClassVar[str] = "LLMGeminiChatConfig"
     google_api_key: str
@@ -148,7 +171,7 @@ class LLMGeminiChatConfig(LLMSetting):
     top_k: int = 1
     max_output_tokens: int = 29000
 
-# %% ../nbs/super_client.ipynb 12
+# %% ../nbs/super_client.ipynb 13
 class LLMSettings(BaseSettings):
     model_config = SettingsConfigDict(env_nested_delimiter="__", env_file=here(".env.local"))
     openai: LLMOpenAIChatConfig
