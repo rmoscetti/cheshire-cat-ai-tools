@@ -45,12 +45,13 @@ def remove_think(text):
 # %% ../nbs/weave_eval.ipynb 6
 class CatModel(weave.Model):
     client: SuperCatClient
+    has_declarative_memory: bool = True
 
     def __init__(
-        self, model_name: str, llm_setting, client_config: Optional[Config] = None
+        self, model_name: str, llm_setting, has_declarative_memory:bool = True, client_config: Optional[Config] = None
     ):
         super().__init__(
-            name=model_name, client=SuperCatClient(config=client_config or Config())
+            name=model_name, client=SuperCatClient(config=client_config or Config()), has_declarative_memory=has_declarative_memory
         )
         self.client.udpate_llm_setting(llm_setting.name, llm_setting.model_dump())
 
@@ -59,7 +60,8 @@ class CatModel(weave.Model):
         response = self.client.send(prompt)
         self.client.wipe_episodic_memory()
         response["model_name"] = self.name
-        response["text_clean"] = remove_think(response["content"])
+        response["text_clean"] = remove_think(response["text"])
+        response['has_declarative_memory'] = self.has_declarative_memory
         return response
 
 # %% ../nbs/weave_eval.ipynb 9
@@ -112,9 +114,9 @@ similarity_scorer = CatEmbeddingSimilarityScorer(
 )
 
 # %% ../nbs/weave_eval.ipynb 17
-async def eval_configs(dataset, n_rep=3, model_confs=conf_variants):
+async def eval_configs(dataset, n_rep=1, model_confs=conf_variants):
     client = SuperCatClient()
-    prepare_episodic_memory(client)
+    prepare_declarative_memory(client)
     evaluation = weave.Evaluation(
         dataset=list(repeat_dataset(dataset, n_rep)),
         scorers=[hallucination_scorer, similarity_scorer],
@@ -125,6 +127,6 @@ async def eval_configs(dataset, n_rep=3, model_confs=conf_variants):
         await evaluation.evaluate(model)
     client.wipe_declarative_memory()
     for name, conf in tqdm(model_confs.items(), total=len(model_confs)):
-        print(f"Evaluating {name} with memory")
-        model = CatModel(name, conf)
+        print(f"Evaluating {name} without memory")
+        model = CatModel(name, conf, has_declarative_memory=False)
         await evaluation.evaluate(model)
