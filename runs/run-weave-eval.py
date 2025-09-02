@@ -13,4 +13,4 @@ weave.init("smart-drying-unitus/declarative-eval")
 setup_declarative_memory()
 dataset = load_eval_dataset()
 
-asyncio.run(eval_configs(dataset, n_rep=2))
+asyncio.run(eval_configs(dataset, n_rep=1))
