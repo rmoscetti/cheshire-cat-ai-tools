@@ -49,5 +49,8 @@ d = { 'settings': { 'branch': 'main',
                                 'cat_tools.eval.CatModel.predict': ('weave_eval.html#catmodel.predict', 'cat_tools/eval.py'),
                                 'cat_tools.eval.eval_configs': ('weave_eval.html#eval_configs', 'cat_tools/eval.py'),
                                 'cat_tools.eval.load_eval_dataset': ('weave_eval.html#load_eval_dataset', 'cat_tools/eval.py'),
+                                'cat_tools.eval.prepare_declarative_memory': ( 'weave_eval.html#prepare_declarative_memory',
+                                                                               'cat_tools/eval.py'),
+                                'cat_tools.eval.read_sentences': ('weave_eval.html#read_sentences', 'cat_tools/eval.py'),
                                 'cat_tools.eval.remove_think': ('weave_eval.html#remove_think', 'cat_tools/eval.py'),
                                 'cat_tools.eval.repeat_dataset': ('weave_eval.html#repeat_dataset', 'cat_tools/eval.py')}}}

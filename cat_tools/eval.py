@@ -2,7 +2,8 @@
 
 # %% auto 0
 __all__ = ['settings', 'conf_variants', 'hallucination_scorer', 'similarity_scorer', 'remove_think', 'CatModel',
-           'load_eval_dataset', 'repeat_dataset', 'CatEmbeddingSimilarityScorer', 'eval_configs']
+           'load_eval_dataset', 'repeat_dataset', 'CatEmbeddingSimilarityScorer', 'read_sentences',
+           'prepare_declarative_memory', 'eval_configs']
 
 # %% ../nbs/weave_eval.ipynb 2
 from .client import SuperCatClient, LLMSettings, LLMSetting
@@ -13,6 +14,7 @@ from pyprojroot import here
 import pandas as pd
 from weave.scorers import HallucinationFreeScorer, EmbeddingSimilarityScorer
 from tqdm.auto import tqdm
+from datetime import datetime
 
 # %% ../nbs/weave_eval.ipynb 3
 settings = LLMSettings()
@@ -113,20 +115,36 @@ similarity_scorer = CatEmbeddingSimilarityScorer(
     threshold=0.8,
 )
 
+# %% ../nbs/weave_eval.ipynb 15
+def read_sentences():
+    path = here("eval/declarative_memory.csv")
+    df = pd.read_csv(path)
+    return df['risposta'].tolist()
+
+# %% ../nbs/weave_eval.ipynb 16
+def prepare_declarative_memory(client: SuperCatClient):
+    client.wipe_declarative_memory()
+    sentences = read_sentences()
+    client.put_sentences(sentences)
+    print(f"Added {len(sentences)} sentences to declarative memory")
+
 # %% ../nbs/weave_eval.ipynb 17
 async def eval_configs(dataset, n_rep=1, model_confs=conf_variants):
     client = SuperCatClient()
+    time = datetime.now().strftime("%m-%d %H:%M")
+    eval_name = f"{time} Eval"
     prepare_declarative_memory(client)
     evaluation = weave.Evaluation(
         dataset=list(repeat_dataset(dataset, n_rep)),
         scorers=[hallucination_scorer, similarity_scorer],
+        name=eval_name,
     )
     for name, conf in tqdm(model_confs.items(), total=len(model_confs)):
         print(f"Evaluating {name} with memory")
         model = CatModel(name, conf)
-        await evaluation.evaluate(model)
+        await evaluation.evaluate(model, __weave={"display_name": f"{eval_name} - {name} memory"})
     client.wipe_declarative_memory()
     for name, conf in tqdm(model_confs.items(), total=len(model_confs)):
         print(f"Evaluating {name} without memory")
         model = CatModel(name, conf, has_declarative_memory=False)
-        await evaluation.evaluate(model)
+        await evaluation.evaluate(model, __weave={"display_name": f"{eval_name} - {name} NO memory"})
