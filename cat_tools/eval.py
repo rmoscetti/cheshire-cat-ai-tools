@@ -62,7 +62,7 @@ class CatModel(weave.Model):
         response = self.client.send(prompt)
         self.client.wipe_episodic_memory()
         response["model_name"] = self.name
-        response["text_clean"] = remove_think(response["text"])
+        response["text_clean"] = remove_think(response.get("text", ""))
         response['has_declarative_memory'] = self.has_declarative_memory
         return response
 
