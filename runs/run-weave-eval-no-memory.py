@@ -30,7 +30,7 @@ conf_variants = {
     # "gemini_smallest": settings.gemini.model_copy(
         # update={"model": "gemini-2.5-flash-lite"}
     # ),
-    "gemini_best": settings.gemini.model_copy(update={"model": "gemini-2.5-pro"}),
+    # "gemini_best": settings.gemini.model_copy(update={"model": "gemini-2.5-pro"}),
     # "gemma_smallest": settings.ollama.model_copy(update={"model": "gemma3:1b"}),
     "gemma_best": settings.ollama.model_copy(update={"model": "gemma3:27b"}),
     # "qwen_smallest": settings.ollama.model_copy(update={"model": "qwen3:0.6b"}),
@@ -46,7 +46,7 @@ async def eval_configs(dataset, n_rep=1, model_confs=conf_variants):
     client = SuperCatClient()
     time = datetime.now().strftime("%m-%d %H:%M")
     eval_name = f"{time} Eval"
-    prepare_declarative_memory(client)
+    # prepare_declarative_memory(client)
     evaluation = weave.Evaluation(
         dataset=list(repeat_dataset(dataset, n_rep)),
         scorers=[similarity_scorer],
