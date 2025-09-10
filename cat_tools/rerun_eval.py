@@ -4,7 +4,12 @@
 __all__ = ['weave_client', 'calls_query', 'parse_calls', 'get_dataset', 'get_missing_df', 'run_missing']
 
 # %% ../nbs/rerun-evaluation.ipynb 2
-from .eval import similarity_scorer, conf_variants, prepare_declarative_memory, CatModel
+from cat_tools.eval import (
+    similarity_scorer,
+    conf_variants,
+    prepare_declarative_memory,
+    CatModel,
+)
 import weave
 import pandas as pd
 from tqdm.auto import tqdm
@@ -17,76 +22,234 @@ from datetime import datetime
 weave_client = weave.init("smart-drying-unitus/declarative-eval")
 
 # %% ../nbs/rerun-evaluation.ipynb 4
-calls_query={"$expr":{"$and":[{"$gt":[{"$getField":"started_at"},{"$literal":1756801780.338}]},{"$or":[{"$eq":[{"$getField":"id"},{"$literal":"019927e9-0d45-7a20-a70c-ad6886ffdb46"}]},{"$eq":[{"$getField":"id"},{"$literal":"019926be-3e2c-7041-9927-26b76aa3fdb9"}]},{"$eq":[{"$getField":"id"},{"$literal":"019925fa-39ee-7f57-b923-eb9cdb36c1e6"}]},{"$eq":[{"$getField":"id"},{"$literal":"0199175a-03ae-7809-8292-f22c2320f1ee"}]},{"$eq":[{"$getField":"id"},{"$literal":"01990fbd-ae07-74cc-9b8e-9e5ae323d958"}]},{"$eq":[{"$getField":"id"},{"$literal":"019910d8-995a-78ed-8151-afbd5a5e4223"}]},{"$eq":[{"$getField":"id"},{"$literal":"0199115d-6ac3-7422-815a-c2b56b7decae"}]},{"$eq":[{"$getField":"id"},{"$literal":"01991448-bdfd-762d-ab6c-c4851521d521"}]},{"$eq":[{"$getField":"id"},{"$literal":"01991061-7220-7a2a-aa03-a14bd6c8a003"}]}]}]}}
+calls_query = {
+    "$expr": {
+        "$and": [
+            {"$gt": [{"$getField": "started_at"}, {"$literal": 1756801780.338}]},
+            {
+                "$or": [
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "019927e9-0d45-7a20-a70c-ad6886ffdb46"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "019926be-3e2c-7041-9927-26b76aa3fdb9"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "019925fa-39ee-7f57-b923-eb9cdb36c1e6"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "0199175a-03ae-7809-8292-f22c2320f1ee"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "01990fbd-ae07-74cc-9b8e-9e5ae323d958"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "019910d8-995a-78ed-8151-afbd5a5e4223"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "0199115d-6ac3-7422-815a-c2b56b7decae"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "01991448-bdfd-762d-ab6c-c4851521d521"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "01991061-7220-7a2a-aa03-a14bd6c8a003"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "01992df7-3180-7fec-8e3c-407c90711749"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "01992e00-da71-79a6-825e-777d99248eab"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "01992e10-d000-7bca-a342-d5b853621cf7"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "01992f3c-f2ed-7ed9-8881-2c99a8747d57"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "01992bc3-5ca2-7c50-b467-788ff19ab9b1"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "01993382-e1d3-75cc-9374-c2d111531b76"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "019934d5-e6d1-7ef5-8091-fee12873b766"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "019934da-fd3e-79c7-a546-ee1b92b4e270"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "019934dc-b009-7ce1-8b4a-b65d6932e994"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "0199353e-6253-7c91-a6e3-003c4f04779a"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "0199353f-3d33-79df-aa87-e3069d9ce80c"},
+                        ]
+                    },
+                    {
+                        "$eq": [
+                            {"$getField": "id"},
+                            {"$literal": "0199357c-2636-7c3a-9bd8-a010effbd164"},
+                        ]
+                    },
+                ]
+            },
+        ]
+    }
+}
 
 # %% ../nbs/rerun-evaluation.ipynb 5
 def parse_calls(calls):
     outs = []
     for call in tqdm(list(calls)):
-        model_name = call.inputs['model'].name
-        has_mem =  'NO memory' not in call.display_name
+        model_name = call.inputs["model"].name
+        has_mem = "NO memory" not in call.display_name
         for row in call.children():
             out = {}
             if inp := row.inputs.unwrap():
-                if inp := inp.get('example', False):
-                        out['question_id']= inp['id']
-                        out['question']= inp['prompt']
-                        out['expected_answer']= inp['target']
+                if inp := inp.get("example", False):
+                    out["question_id"] = inp["id"]
+                    out["question"] = inp["prompt"]
+                    out["expected_answer"] = inp["target"]
             if output := row.output:
                 output = output.unwrap()
-                if 'output' in output:
-                    if 'text_clean' in output['output']:
-                        out['model_answer'] = output['output']['text_clean']
-                    if 'scores' in output:
-                        if 'CatEmbeddingSimilarityScorer' in output['scores']:
-                            out['similarity_score'] = output['scores']['CatEmbeddingSimilarityScorer']['similarity_score']
+                if "output" in output:
+                    if "text_clean" in output["output"]:
+                        out["model_answer"] = output["output"]["text_clean"]
+                    if "scores" in output:
+                        if "CatEmbeddingSimilarityScorer" in output["scores"]:
+                            out["similarity_score"] = output["scores"][
+                                "CatEmbeddingSimilarityScorer"
+                            ]["similarity_score"]
 
-            out['model_name'] = model_name
-            out['weave_call'] = row
-            out['has_declarative_memory'] = has_mem
+            out["model_name"] = model_name
+            out["weave_call"] = row
+            out["has_declarative_memory"] = has_mem
             outs.append(out)
     return pd.DataFrame(outs)
 
-# %% ../nbs/rerun-evaluation.ipynb 16
+# %% ../nbs/rerun-evaluation.ipynb 20
 def get_dataset(missing):
     datasets = []
     for row in missing.iter_rows(named=True):
         dataset = []
-        for id, q, t in zip(row['id'], row['question'], row['target']):
+        for id, q, t in zip(row["id"], row["question"], row["target"]):
             if id is None:
                 continue
-            dataset.append({
-                'id': id,
-                'prompt': q,
-                'input': q,
-                'target': t
-            })
+            dataset.append({"id": id, "prompt": q, "input": q, "target": t})
         datasets.append(dataset)
     return datasets
 
-# %% ../nbs/rerun-evaluation.ipynb 18
-def get_missing_df(weave_client, query = calls_query):
-    calls = list(weave_client.get_calls(
-        filter={"trace_roots_only": True},
-        query=query,
-        sort_by=[{"field":"started_at","direction":"desc"}],
-    ))
+# %% ../nbs/rerun-evaluation.ipynb 22
+def get_missing_df(weave_client, query=calls_query):
+    calls = list(
+        weave_client.get_calls(
+            filter={"trace_roots_only": True},
+            query=query,
+            sort_by=[{"field": "started_at", "direction": "desc"}],
+        )
+    )
     df = parse_calls(calls)
-    df_pl = pl.from_pandas(df.drop(columns=['weave_call']))
-    missing = df_pl.filter(c.model_answer.is_null()).group_by(c.model_name, c.has_declarative_memory).agg(question = c.question, target = c.expected_answer, id = c.question_id.cast(pl.Int64), n = pl.len()).sort(c.has_declarative_memory)
-    missing = missing.with_columns(dataset = pl.Series(get_dataset(missing), dtype=pl.Object))
+    df_pl = pl.from_pandas(df.drop(columns=["weave_call"]))
+    missing = (
+        df_pl.filter(c.question_id.is_not_null())
+        .group_by(
+            c.model_name,
+            c.has_declarative_memory,
+            c.question,
+            c.expected_answer,
+            c.question_id,
+        )
+        .agg(
+            all_missing=c.model_answer.is_null().all(),
+        )
+        .filter(c.all_missing)
+        .group_by(c.model_name, c.has_declarative_memory)
+        .agg(
+            question=c.question,
+            target=c.expected_answer,
+            id=c.question_id.cast(pl.Int64),
+            n=pl.len(),
+        )
+        .sort(c.has_declarative_memory)
+    )
+    missing = missing.with_columns(
+        dataset=pl.Series(get_dataset(missing), dtype=pl.Object)
+    )
     return missing
 
-# %% ../nbs/rerun-evaluation.ipynb 19
+# %% ../nbs/rerun-evaluation.ipynb 23
 async def run_missing(missing):
     client = SuperCatClient()
     time = datetime.now().strftime("%m-%d %H:%M")
     eval_name = f"{time} Eval"
     cat_has_memory = False
     for row in missing.iter_rows(named=True):
-        dataset = row['dataset']
-        model_name = row['model_name']
-        has_mem = row['has_declarative_memory']
+        dataset = row["dataset"]
+        model_name = row["model_name"]
+        has_mem = row["has_declarative_memory"]
         if cat_has_memory != has_mem:
             if has_mem:
                 print("Preparing declarative memory...")
@@ -95,12 +258,17 @@ async def run_missing(missing):
                 client.wipe_declarative_memory()
             cat_has_memory = has_mem
         print(f"Running {model_name} with memory={has_mem} on {len(dataset)} examples")
-        model = CatModel(model_name, conf_variants[model_name], has_declarative_memory=has_mem)
+        model = CatModel(
+            model_name, conf_variants[model_name], has_declarative_memory=has_mem
+        )
         evaluation = weave.Evaluation(
             dataset=dataset,
             scorers=[similarity_scorer],
             name=eval_name,
         )
         await evaluation.evaluate(
-            model, __weave={"display_name": f"{eval_name} - {model_name} {'memory' if has_mem else 'NO memory'}"}
+            model,
+            __weave={
+                "display_name": f"{eval_name} - {model_name} {'memory' if has_mem else 'NO memory'}"
+            },
         )
