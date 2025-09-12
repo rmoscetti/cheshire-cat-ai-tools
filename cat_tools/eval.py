@@ -136,7 +136,7 @@ async def eval_configs(dataset, n_rep=1, model_confs=conf_variants):
     prepare_declarative_memory(client)
     evaluation = weave.Evaluation(
         dataset=list(repeat_dataset(dataset, n_rep)),
-        scorers=[hallucination_scorer, similarity_scorer],
+        scorers=[similarity_scorer],
         name=eval_name,
     )
     for name, conf in tqdm(model_confs.items(), total=len(model_confs)):
