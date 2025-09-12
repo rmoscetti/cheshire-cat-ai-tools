@@ -280,6 +280,12 @@ calls_query = {
                                 {"$literal": "019939cc-9647-7f72-bfc2-85bad8a523e6"},
                             ]
                         },
+                        {
+                            "$eq": [
+                                {"$getField": "id"},
+                                {"$literal": "01993d1f-ad18-72b4-9319-ed51c37a6263"},
+                            ]
+                        },
                 ]
             },
         ]
