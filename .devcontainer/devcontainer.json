@@ -23,5 +23,5 @@
     }
   },
 "mounts": ["source=${localWorkspaceFolderBasename}-pixi,target=${containerWorkspaceFolder}/evaluation/.pixi,type=volume"],
-"postCreateCommand": "cd evaluation && pixi install"
+"postCreateCommand": "sudo chown vscode evaluation/.pixi && cd evaluation && pixi install"
 }
