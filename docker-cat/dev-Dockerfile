@@ -1,0 +1,15 @@
+ARG VARIANT="3.14"
+FROM mcr.microsoft.com/devcontainers/python:${VARIANT}
+
+# Install general system dependencies
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends \
+    starship \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+USER vscode
+RUN echo 'eval "$(starship init bash)"' >> .bashrc
+RUN bash -c 'curl -fsSL https://pixi.sh/install.sh | bash'
+# Set up the working directory
+WORKDIR /workspaces/cheshire-cat-ai-tools
+CMD sleep infinity

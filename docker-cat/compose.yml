@@ -14,11 +14,11 @@ services:
       - 1865:80
       - 5678:5678
     volumes:
-      - ${PWD}/docker-cat/static:/app/cat/static
-      - ${PWD}/plugins:/app/cat/plugins
-      - ${PWD}/docker-cat/data:/app/cat/data
+      - ${PWD}/static:/app/cat/static
+      - ${PWD}/../plugins:/app/cat/plugins
+      - ${PWD}/data:/app/cat/data
       # mount the drymulator-client directory to the /drymulator-client directory in the container so it can be accessed by the cheshire-cat-core service and installed as a dependency
-      - ${PWD}/drymulator/drymulator-client:/drymulator-client
+      - ${PWD}/../drymulator/drymulator-client:/drymulator-client
     restart: unless-stopped
 
   qdrant:
@@ -50,7 +50,6 @@ services:
     volumes:
       - ${PWD}/docker-cat/mysql:/var/lib/mysql
     restart: unless-stopped
-
   drymulator:
     build:
       context: ../drymulator
@@ -63,3 +62,14 @@ services:
         required: false
     volumes:
       - ${PWD}/docker-cat/drymulator:/app
+  dev:
+    build:
+      context: .
+      dockerfile: dev-Dockerfile
+    depends_on:
+      - cheshire-cat-core
+      - mariadb
+      - qdrant
+
+    volumes:
+      - ${PWD}:/workspaces/:cached

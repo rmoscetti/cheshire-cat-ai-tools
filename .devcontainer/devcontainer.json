@@ -1,0 +1,27 @@
+{
+  "name": "Cheshire Cat AI Tools",
+  "dockerComposeFile": "../docker-cat/compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/workspaces",
+  "shutdownAction": "none",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "tamasfe.even-better-toml",
+        "charliermarsh.ruff"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "${workspaceFolder}/evaluation/.pixi/envs/default/python",
+        "editor.formatOnSave": true,
+        "[python]": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "charliermarsh.ruff"
+        }
+      }
+    }
+  },
+"mounts": ["source=${localWorkspaceFolderBasename}-pixi,target=${containerWorkspaceFolder}/evaluation/.pixi,type=volume"],
+"postCreateCommand": "cd evaluation && pixi install"
+}

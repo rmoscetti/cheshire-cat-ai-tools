@@ -1,12 +1,16 @@
 """
 Client Cat that allows to send messages thanks to proper handling of the websockets
 """
+
 from typing import Optional
 from cheshire_cat_api.config import Config
 from cheshire_cat_api import CatClient
+from cheshire_cat_api.models import SettingBody
+import requests
 import time
 from queue import Queue
 import json
+
 
 class SuperCatClient:
     """
@@ -15,19 +19,20 @@ class SuperCatClient:
     Uses a queue to communite with the websocket thread and blocks until a response is received.
     This is needed as there is a bug in the cat that results in tools not being executed if we make a simple POST request
     """
-    
+
     def __init__(self, config: Optional[Config] = None):
         self.cat_client = CatClient(config, on_message=self.on_message)
         self.cat_client.connect_ws()
         self.wait_for_connection()
         self.queue = Queue()
 
+        self.host = self.cat_client.memory.api_client.configuration.host
 
     def on_message(self, message):
         # this run on the websocket thread
         try:
             message = json.loads(message)
-            if message.get('type') == 'chat_token':
+            if message.get("type") == "chat_token":
                 return
             self.queue.put(message)
 
@@ -39,24 +44,43 @@ class SuperCatClient:
         while not self.cat_client.is_ws_connected:
             time.sleep(1)
             if time.time() - start_time > timeout:
-                raise TimeoutError(f"Failed to connect to WebSocket within timeout ({timeout} sec).")
+                raise TimeoutError(
+                    f"Failed to connect to WebSocket within timeout ({timeout} sec)."
+                )
 
     def send(self, message):
         self.cat_client.send(message)
         return self.queue.get(10)
 
+    def udpate_setting(self, name, value):
+        setting_id = next(
+            (
+                s["setting_id"]
+                for s in requests.get(
+                    f"{self.host}/settings/",
+                ).json()["settings"]
+                if s["name"] == name
+            )
+        )
+        requests.put(
+            f"{self.host}/settings/{setting_id}",
+            json={
+                "name": name,
+                "value": {value},
+            },
+        ).raise_for_status()
 
     def __getattr__(self, name):
         # forward all the other calls to the official client
         if hasattr(self, "cat_client"):
             return getattr(self.cat_client, name)
-        
+
     def close(self):
         self.cat_client.close()
-    
+
     def __del__(self):
         self.cat_client.close()
-    
+
     def __enter__(self):
         """Enter the runtime context related to this object."""
         return self
@@ -64,4 +88,3 @@ class SuperCatClient:
     def __exit__(self, exc_type, exc_value, traceback):
         """Exit the runtime context and clean up resources."""
         self.close()
-
