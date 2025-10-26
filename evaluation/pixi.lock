@@ -316,8 +316,8 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/5b/af/a3252e5afac98a036f83c65ec92cadf6677ccdaacbbb2151da29f694d136/wandb-0.21.3-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/30/1a/27bd5abb3ab60e3467e39145872271ced74b3e642e9c3835d8d65145878a/weave-0.52.5-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/af/44/46407d7f7a56e9a85a4c207724c9f2c545c060380718eea9088f222ba697/yarl-1.20.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+      - pypi: ../drymulator/drymulator-client
       - pypi: ./
-      - pypi: ./drymulator/drymulator-client
 packages:
 - conda: https://conda.anaconda.org/conda-forge/linux-64/_libgcc_mutex-0.1-conda_forge.tar.bz2
   sha256: fe51de6107f9edc7aa4f786a70f4a883943bc9d39b3bb7307c04c41410990726
@@ -1100,7 +1100,7 @@ packages:
   - pydoctor>=25.4.0 ; extra == 'docs'
   - pytest ; extra == 'test'
   requires_python: '>=3.8'
-- pypi: ./drymulator/drymulator-client
+- pypi: ../drymulator/drymulator-client
   name: drymulator-client
   version: 0.1.0
   sha256: 251cf597136cc7fcb5f9933cd825e8496b69d22e4e41c23dc0ed1705a8601712

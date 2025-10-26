@@ -1,4 +1,4 @@
-[project]
+[workspace]
 authors = ["Simone Massaro <simone.massaro@mone27.net>"]
 channels = ["conda-forge"]
 description = "Add a short description here"
@@ -32,7 +32,7 @@ pyarrow = ">=21.0.0,<22"
 [pypi-dependencies]
 cheshire-cat-api = "*"
 weave = ">=0.52.4, <0.53"
-drymulator_client={path="drymulator/drymulator-client", editable = true}
+drymulator_client={path="../drymulator/drymulator-client", editable = true}
 cat_tools={path=".", editable = true}
 litellm = ">=1.76.0, <2"
 google-auth = ">=2.40.3, <3"
