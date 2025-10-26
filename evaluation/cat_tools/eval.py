@@ -62,7 +62,7 @@ class CatModel(weave.Model):
         response = self.client.send(prompt)
         self.client.wipe_episodic_memory()
         response["model_name"] = self.name
-        response["text_clean"] = remove_think(response["text"])
+        response["text_clean"] = remove_think(response.get("text", ""))
         response['has_declarative_memory'] = self.has_declarative_memory
         return response
 
@@ -136,7 +136,7 @@ async def eval_configs(dataset, n_rep=1, model_confs=conf_variants):
     prepare_declarative_memory(client)
     evaluation = weave.Evaluation(
         dataset=list(repeat_dataset(dataset, n_rep)),
-        scorers=[hallucination_scorer, similarity_scorer],
+        scorers=[similarity_scorer],
         name=eval_name,
     )
     for name, conf in tqdm(model_confs.items(), total=len(model_confs)):

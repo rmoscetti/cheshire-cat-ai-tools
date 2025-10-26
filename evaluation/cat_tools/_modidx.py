@@ -53,4 +53,10 @@ d = { 'settings': { 'branch': 'main',
                                                                                'cat_tools/eval.py'),
                                 'cat_tools.eval.read_sentences': ('weave_eval.html#read_sentences', 'cat_tools/eval.py'),
                                 'cat_tools.eval.remove_think': ('weave_eval.html#remove_think', 'cat_tools/eval.py'),
-                                'cat_tools.eval.repeat_dataset': ('weave_eval.html#repeat_dataset', 'cat_tools/eval.py')}}}
+                                'cat_tools.eval.repeat_dataset': ('weave_eval.html#repeat_dataset', 'cat_tools/eval.py')},
+            'cat_tools.rerun_eval': { 'cat_tools.rerun_eval.get_dataset': ('rerun-evaluation.html#get_dataset', 'cat_tools/rerun_eval.py'),
+                                      'cat_tools.rerun_eval.get_missing_df': ( 'rerun-evaluation.html#get_missing_df',
+                                                                               'cat_tools/rerun_eval.py'),
+                                      'cat_tools.rerun_eval.parse_calls': ('rerun-evaluation.html#parse_calls', 'cat_tools/rerun_eval.py'),
+                                      'cat_tools.rerun_eval.run_missing': ( 'rerun-evaluation.html#run_missing',
+                                                                            'cat_tools/rerun_eval.py')}}}
