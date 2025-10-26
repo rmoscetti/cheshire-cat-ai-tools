@@ -3,7 +3,7 @@
   "dockerComposeFile": "../docker-cat/compose.yml",
   "service": "dev",
   "workspaceFolder": "/workspaces",
-  "shutdownAction": "none",
+  "shutdownAction": "stopCompose",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -22,6 +22,8 @@
       }
     }
   },
-"mounts": ["source=${localWorkspaceFolderBasename}-pixi,target=${containerWorkspaceFolder}/evaluation/.pixi,type=volume"],
-"postCreateCommand": "sudo chown vscode evaluation/.pixi && cd evaluation && pixi install"
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-pixi,target=${containerWorkspaceFolder}/evaluation/.pixi,type=volume"
+  ],
+  "postCreateCommand": "sudo chown vscode evaluation/.pixi && cd evaluation && pixi install"
 }
